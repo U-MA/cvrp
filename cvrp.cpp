@@ -25,14 +25,6 @@ namespace VrpSolver {
         return param;
     }
 
-    // 文字列を整数に変換する
-    int stoi(std::string str) {
-        std::istringstream iss(str);
-        int i;
-        iss >> i;
-        return i;
-    }
-
     // infileから情報を読み取りCvrpクラスをセットアップする
     void read_vrp(Cvrp& cvrp, const std::string &infile) {
         std::ifstream ifs(infile.c_str());
@@ -52,16 +44,17 @@ namespace VrpSolver {
                 cvrp.name_ = get_parameter(ifs);
             }
             else if (tag == "DIMENSION") {
-                cvrp.dimension_ = VrpSolver::stoi(get_parameter(ifs));
+                cvrp.dimension_ = stoi(get_parameter(ifs));
             }
             else if (tag == "CAPACITY") {
-                cvrp.capacity_ = VrpSolver::stoi(get_parameter(ifs));
+                cvrp.capacity_ = stoi(get_parameter(ifs));
             }
             else if (tag == "DEMAND_SECTION") {
-                for (int i=0; i < cvrp.dimension_; i++) {
+                cvrp.demands_.push_back(0); // 0要素目は0にしておく
+                for (int i=1; i <= cvrp.dimension_; i++) {
                     unsigned int node_id, demand;
                     ifs >> node_id >> demand;
-                    if (node_id != i+1)
+                    if (node_id != i)
                         throw std::runtime_error("error:"
                               "DEMAND_SECTION format may be different");
                     cvrp.demands_.push_back(demand);
@@ -77,8 +70,8 @@ namespace VrpSolver {
                 display_data_type = get_parameter(ifs);
             }
             else if (tag == "DEPOT_SECTION") {
-                cvrp.depot_ = VrpSolver::stoi(get_parameter(ifs));
-                if (VrpSolver::stoi(get_parameter(ifs)) != -1)
+                cvrp.depot_ = stoi(get_parameter(ifs));
+                if (stoi(get_parameter(ifs)) != -1)
                     throw std::runtime_error("error:"
                           "can't handle multiple depots");
             }
