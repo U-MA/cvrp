@@ -19,3 +19,9 @@
 *.exe
 *.out
 *.app
+
+# For Mac OS X
+.DS_Store
+
+# For experiment
+experiment/*
