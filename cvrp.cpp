@@ -6,16 +6,6 @@
 
 namespace VrpSolver {
 
-    unsigned int Cvrp::demand(unsigned int node_id) const {
-        return demands_[node_id];
-    }
-
-    int Cvrp::distance(unsigned int from, unsigned int to) const {
-        const int index = (to > from) ? ((to-2)*(to-1)/2+(from-1)) :
-                                        ((from-2)*(from-1)/2+(to-1));
-        return distances_[index];
-    }
-
     // 文字列strからtrim_char文字列に含まれている文字を削除
     void trim(std::string& str, const std::string& trim_char) {
         size_t pos;
