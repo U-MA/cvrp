@@ -7,6 +7,8 @@ namespace VrpSolver {
 
         // member variable
         std::string name_;
+        unsigned int dimension_;
+        unsigned int capacity_;
     };
 
     // cvrp intialize by infile
