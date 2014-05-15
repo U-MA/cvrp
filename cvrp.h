@@ -10,10 +10,12 @@ namespace VrpSolver {
         Cvrp() : name_(), dimension_(0), capacity_(0), demands_(0) {}
 
         // accessor
+        // 範囲外は無視する
         unsigned int demand(unsigned int node_id) const {
             return demands_[node_id];
         }
 
+        // 範囲外は無視する
         int distance(unsigned int from, unsigned int to) const {
             const int index = (to > from) ? ((to-2)*(to-1)/2+(from-1)) :
                 ((from-2)*(from-1)/2+(to-1));
