@@ -6,8 +6,14 @@
 
 namespace VrpSolver {
 
-    inline unsigned int Cvrp::demand(unsigned int node_id) {
+    unsigned int Cvrp::demand(unsigned int node_id) const {
         return demands_[node_id];
+    }
+
+    int Cvrp::distance(unsigned int from, unsigned int to) const {
+        const int index = (to > from) ? ((to-2)*(to-1)/2+(from-1)) :
+                                        ((from-2)*(from-1)/2+(to-1));
+        return distances_[index];
     }
 
     // 文字列strからtrim_char文字列に含まれている文字を削除
@@ -68,6 +74,24 @@ namespace VrpSolver {
             }
             else if (tag == "DISPLAY_DATA_TYPE") {
                 display_data_type = get_parameter(ifs);
+            }
+            else if (tag == "EDGE_WEIGHT_SECTION") {
+                if (edge_weight_format == "LOWER_ROW") {
+                    int num=0;
+                    for (int i=0; i < cvrp.dimension_; i++) {
+                        for (int j=0; j < i; j++) {
+                            int weight;
+                            ifs >> weight;
+                            cvrp.distances_.push_back(weight);
+                            num++;
+                        }
+                    }
+                    // n点からなる完全グラフの枝数はn * (n-1) / 2
+                    const int num_edges = cvrp.dimension_ * (cvrp.dimension_-1) / 2;
+                    if (num != num_edges)
+                        throw std::runtime_error("error:"
+                              "EDGE_WEIGHT_SECTION may be differnt");
+                }
             }
             else if (tag == "DEPOT_SECTION") {
                 cvrp.depot_ = stoi(get_parameter(ifs));
