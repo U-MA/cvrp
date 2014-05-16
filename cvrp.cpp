@@ -38,6 +38,40 @@ namespace VrpSolver {
         return param;
     }
 
+    // TSPLIB formatのキーワード
+    const std::string NAME      = "NAME";
+    const std::string TYPE      = "TYPE";
+    const std::string DIMENSION = "DIMENSION";
+    const std::string CAPACITY  = "CAPACITY";
+
+    const std::string EDGE_WEIGHT_TYPE   = "EDGE_WEIGHT_TYPE";
+    const std::string EDGE_WEIGHT_FORMAT = "EDGE_WEIGHT_FORMAT";
+    const std::string EDGE_DATA_FORMAT   = "EDGE_DATA_FORMAT";
+    const std::string NODE_COORD_TYPE    = "NODE_COORD_TYPE";
+    const std::string DISPLAY_DATA_TYPE  = "DISPLAY_DATA_TYPE";
+
+    const std::string NODE_COORD_SECTION  = "NODE_COORD_SECTION";
+    const std::string DEPOT_SECTION       = "DEPOT_SECTION";
+    const std::string DEMAND_SECTION      = "DEMAND_SECTION";
+    const std::string EDGE_DATA_SECTION   = "EDGE_DATA_SECTION";
+    const std::string EDGE_WEIGHT_SECTION = "EDGE_WEIGHT_SECTION";
+
+    // EDGE_WEIGHT_TYPEのvalue
+    namespace EdgeWeightType {
+        const std::string EXPLICIT = "EXPLICIT";
+        const std::string EUC_2D   = "EUC_2D";
+    }
+
+    // EDGE_WEIGHT_FORMATのvalue
+    namespace EdgeWeightFormat {
+        const std::string LOWER_ROW = "LOWER_ROW";
+    }
+
+    // DISPLAY_DATA_TYPEのvalue
+    namespace DisplayDataType {
+        const std::string NO_DISPLAY = "NO_DISPLAY";
+    }
+
     // infileから情報を読み取りCvrpクラスをセットアップする
     void read_vrp(Cvrp& cvrp, const std::string &infile) {
         std::ifstream ifs(infile.c_str());
@@ -52,16 +86,16 @@ namespace VrpSolver {
             std::string tag;
             ifs >> tag;
             trim(tag, " :");
-            if (tag == "NAME") {
+            if (tag == NAME) {
                 cvrp.name_ = get_parameter(ifs);
             }
-            else if (tag == "DIMENSION") {
+            else if (tag == DIMENSION) {
                 cvrp.dimension_ = stoi(get_parameter(ifs));
             }
-            else if (tag == "CAPACITY") {
+            else if (tag == CAPACITY) {
                 cvrp.capacity_ = stoi(get_parameter(ifs));
             }
-            else if (tag == "DEMAND_SECTION") {
+            else if (tag == DEMAND_SECTION) {
                 cvrp.demands_.push_back(0); // 0要素目は0にしておく
                 for (int i=1; i <= cvrp.dimension_; i++) {
                     unsigned int node_id, demand;
@@ -72,17 +106,17 @@ namespace VrpSolver {
                     cvrp.demands_.push_back(demand);
                 }
             }
-            else if (tag == "EDGE_WEIGHT_TYPE") {
+            else if (tag == EDGE_WEIGHT_TYPE) {
                 edge_weight_type = get_parameter(ifs);
             }
-            else if (tag == "EDGE_WEIGHT_FORMAT") {
+            else if (tag == EDGE_WEIGHT_FORMAT) {
                 edge_weight_format = get_parameter(ifs);
             }
-            else if (tag == "DISPLAY_DATA_TYPE") {
+            else if (tag == DISPLAY_DATA_TYPE) {
                 display_data_type = get_parameter(ifs);
             }
-            else if (tag == "EDGE_WEIGHT_SECTION") {
-                if (edge_weight_format == "LOWER_ROW") {
+            else if (tag == EDGE_WEIGHT_SECTION) {
+                if (edge_weight_format == EdgeWeightFormat::LOWER_ROW) {
                     int num=0;
                     for (int i=0; i < cvrp.dimension_; i++) {
                         for (int j=0; j < i; j++) {
@@ -99,7 +133,7 @@ namespace VrpSolver {
                               "EDGE_WEIGHT_SECTION may be differnt");
                 }
             }
-            else if (tag == "NODE_COORD_SECTION") {
+            else if (tag == NODE_COORD_SECTION) {
                 int n=1, m, x, y;
                 while (n != cvrp.dimension_) {
                     ifs >> n >> x >> y;
@@ -108,7 +142,7 @@ namespace VrpSolver {
                     n++;
                 }
             }
-            else if (tag == "DEPOT_SECTION") {
+            else if (tag == DEPOT_SECTION) {
                 cvrp.depot_ = stoi(get_parameter(ifs));
                 if (stoi(get_parameter(ifs)) != -1)
                     throw std::runtime_error("error:"
@@ -116,7 +150,7 @@ namespace VrpSolver {
             }
         }
         // distancesの設定
-        if (edge_weight_type != "EXPLICIT") {
+        if (edge_weight_type != EdgeWeightType::EXPLICIT) {
             auto& distances = cvrp.distances_;
             auto& coords    = cvrp.coords_;
             for (int i=0; i < cvrp.dimension_; i++) {
