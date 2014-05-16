@@ -1,4 +1,5 @@
 #ifndef VRPSOLVER_CVRP_H
+#define VRPSOLVER_CVRP_H
 
 #include <utility>
 #include <string>
