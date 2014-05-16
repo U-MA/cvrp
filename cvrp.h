@@ -29,6 +29,7 @@ namespace VrpSolver {
 
     // cvrp intialize by infile
     void read_vrp(Cvrp& cvrp, const std::string &infile);
-}
+
+} // namespace VrpSolver
 
 #endif // VRPSOLVER_CVRP_H
