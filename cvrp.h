@@ -9,7 +9,8 @@ namespace VrpSolver {
 
     class Cvrp {
     public:
-        Cvrp() : name_(), dimension_(0), capacity_(0), demands_(0) {}
+        Cvrp() : name_(), dimension_(0), capacity_(0), demands_(0),
+                 distances_(0), coords_(0) {}
 
         // accessor
         // node番号は1からdimension_まで
