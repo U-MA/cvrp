@@ -7,6 +7,15 @@
 
 namespace VrpSolver {
 
+    int Cvrp::distance(unsigned int from, unsigned int to) const {
+        if ((1 > from) || (from > dimension_) || (1 > to) || (from > dimension_))
+            throw std::out_of_range("error: in Cvrp::distance");
+
+        const int index = (to > from) ? ((to-2)*(to-1)/2+(from-1)) :
+            ((from-2)*(from-1)/2+(to-1));
+        return distances_[index];
+    }
+
     // 文字列strからtrim_char文字列に含まれている文字を削除
     void trim(std::string& str, const std::string& trim_char) {
         size_t pos;

@@ -16,13 +16,7 @@ namespace VrpSolver {
             return demands_[node_id];
         }
 
-        // 範囲外は無視する
-        int distance(unsigned int from, unsigned int to) const {
-            const int index = (to > from) ? ((to-2)*(to-1)/2+(from-1)) :
-                ((from-2)*(from-1)/2+(to-1));
-            return distances_[index];
-        }
-
+        int distance(unsigned int from, unsigned int to) const;
 
         // member variable
         std::string name_;
