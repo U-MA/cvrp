@@ -1,5 +1,6 @@
 #ifndef VRPSOLVER_CVRP_H
 
+#include <utility>
 #include <string>
 #include <vector>
 
@@ -30,6 +31,7 @@ namespace VrpSolver {
         unsigned int depot_;
         std::vector<unsigned int> demands_;
         std::vector<int> distances_;
+        std::vector<std::pair<int,int>> coords_;
     };
 
     // cvrp intialize by infile

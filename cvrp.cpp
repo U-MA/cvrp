@@ -1,6 +1,7 @@
 #include <sstream>
 #include <fstream>
 #include <stdexcept>
+#include <cmath>
 
 #include "cvrp.h"
 
@@ -83,13 +84,33 @@ namespace VrpSolver {
                               "EDGE_WEIGHT_SECTION may be differnt");
                 }
             }
+            else if (tag == "NODE_COORD_SECTION") {
+                int n=1, m, x, y;
+                while (n != cvrp.dimension_) {
+                    ifs >> n >> x >> y;
+                    std::pair<int,int> c(x,y);
+                    cvrp.coords_.push_back(c);
+                    n++;
+                }
+            }
             else if (tag == "DEPOT_SECTION") {
                 cvrp.depot_ = stoi(get_parameter(ifs));
                 if (stoi(get_parameter(ifs)) != -1)
                     throw std::runtime_error("error:"
                           "can't handle multiple depots");
             }
-            // 車体数を読み込むのは最後
+        }
+        // distancesの設定
+        if (edge_weight_type != "EXPLICIT") {
+            auto& distances = cvrp.distances_;
+            auto& coords    = cvrp.coords_;
+            for (int i=0; i < cvrp.dimension_; i++) {
+                for (int j=0; j < i; j++) {
+                    int dx = coords[j].first  - coords[i].first;
+                    int dy = coords[j].second - coords[i].second;
+                    distances.push_back(floor(sqrt(dx*dx + dy*dy)+0.5));
+                }
+            }
         }
     }
 }
