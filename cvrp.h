@@ -11,11 +11,8 @@ namespace VrpSolver {
         Cvrp() : name_(), dimension_(0), capacity_(0), demands_(0) {}
 
         // accessor
-        // 範囲外は無視する
-        unsigned int demand(unsigned int node_id) const {
-            return demands_[node_id];
-        }
-
+        // node番号は1からdimension_まで
+        unsigned int demand(unsigned int node_id) const;
         int distance(unsigned int from, unsigned int to) const;
 
         // member variable

@@ -7,12 +7,19 @@
 
 namespace VrpSolver {
 
+    unsigned int Cvrp::demand(unsigned int node_id) const {
+        if ((1 > node_id) || (node_id > dimension_))
+            throw std::out_of_range("error: in Cvrp::demand");
+        return demands_[node_id];
+    }
+
     int Cvrp::distance(unsigned int from, unsigned int to) const {
-        if ((1 > from) || (from > dimension_) || (1 > to) || (from > dimension_))
+        if ((1 > from) || (from > dimension_) ||
+            (1 > to) || (to > dimension_))
             throw std::out_of_range("error: in Cvrp::distance");
 
         const int index = (to > from) ? ((to-2)*(to-1)/2+(from-1)) :
-            ((from-2)*(from-1)/2+(to-1));
+                                        ((from-2)*(from-1)/2+(to-1));
         return distances_[index];
     }
 
@@ -34,9 +41,8 @@ namespace VrpSolver {
     // infileから情報を読み取りCvrpクラスをセットアップする
     void read_vrp(Cvrp& cvrp, const std::string &infile) {
         std::ifstream ifs(infile.c_str());
-        if (!ifs) {
-            throw std::runtime_error("can't open file " + infile);
-        }
+        if (!ifs)
+            throw std::runtime_error("error: can't open file " + infile);
 
         std::string edge_weight_type,
                     edge_weight_format,
