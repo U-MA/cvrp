@@ -1,8 +1,8 @@
-#include <sstream>
-#include <fstream>
-#include <stdexcept>
-#include <map>
 #include <cmath>
+#include <fstream>
+#include <map>
+#include <sstream>
+#include <stdexcept>
 
 #include "cvrp.h"
 #include "tsplib_format.h"
@@ -41,7 +41,7 @@ namespace VrpSolver {
     }
 
     enum TsplibKeyword {
-        NAME=100, TYPE, COMMENT, DIMENSION, CAPACITY,
+        NAME, TYPE, COMMENT, DIMENSION, CAPACITY,
         EDGE_WEIGHT_TYPE, EDGE_WEIGHT_FORMAT, EDGE_DATA_FORMAT,
         NODE_COORD_TYPE, DISPLAY_DATA_TYPE,
         NODE_COORD_SECTION, DEPOT_SECTION, DEMAND_SECTION,
@@ -200,4 +200,5 @@ namespace VrpSolver {
             }
         }
     }
+
 } // namespace VrpSolver
