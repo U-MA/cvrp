@@ -1,6 +1,7 @@
 #include <sstream>
 #include <fstream>
 #include <stdexcept>
+#include <map>
 #include <cmath>
 
 #include "cvrp.h"
@@ -39,6 +40,35 @@ namespace VrpSolver {
         return param;
     }
 
+    enum TsplibKeyword {
+        NAME=100, TYPE, COMMENT, DIMENSION, CAPACITY,
+        EDGE_WEIGHT_TYPE, EDGE_WEIGHT_FORMAT, EDGE_DATA_FORMAT,
+        NODE_COORD_TYPE, DISPLAY_DATA_TYPE,
+        NODE_COORD_SECTION, DEPOT_SECTION, DEMAND_SECTION,
+        EDGE_DATA_SECTION, EDGE_WEIGHT_SECTION,
+        END_OF_FILE
+    };
+
+    std::map<std::string, TsplibKeyword> keyword_map = {
+        { "NAME",                NAME },
+        { "TYPE",                TYPE },
+        { "COMMENT",             COMMENT },
+        { "DIMENSION",           DIMENSION },
+        { "CAPACITY",            CAPACITY },
+        { "EDGE_WEIGHT_TYPE",      EDGE_WEIGHT_TYPE },
+        { "EDGE_WEIGHT_FORMAT",  EDGE_WEIGHT_FORMAT },
+        { "EDGE_DATA_FORMAT",    EDGE_DATA_FORMAT },
+        { "NODE_COORD_TYPE",     NODE_COORD_TYPE },
+        { "DISPLAY_DATA_TYPE",   DISPLAY_DATA_TYPE },
+        { "NODE_COORD_SECTION",  NODE_COORD_SECTION },
+        { "DEPOT_SECTION",       DEPOT_SECTION },
+        { "DEMAND_SECTION",      DEMAND_SECTION },
+        { "EDGE_DATA_SECTION",   EDGE_DATA_SECTION },
+        { "EDGE_WEIGHT_SECTION", EDGE_WEIGHT_SECTION },
+        { "EOF",                 END_OF_FILE }
+    };
+
+
     // infileから情報を読み取りCvrpクラスをセットアップする
     void read_vrp(Cvrp& cvrp, const std::string &infile) {
         std::ifstream ifs(infile.c_str());
@@ -49,73 +79,114 @@ namespace VrpSolver {
                     edge_weight_format,
                     display_data_type;
 
-        while (!ifs.eof()) {
+        while (ifs) {
             std::string tsp_keyword;
             ifs >> tsp_keyword;
+            if (ifs.eof()) break;
             trim(tsp_keyword, " :");
-            if (tsp_keyword == Tsplib::NAME) {
-                cvrp.name_ = get_parameter(ifs);
-            }
-            else if (tsp_keyword == Tsplib::DIMENSION) {
-                cvrp.dimension_ = stoi(get_parameter(ifs));
-            }
-            else if (tsp_keyword == Tsplib::CAPACITY) {
-                cvrp.capacity_ = stoi(get_parameter(ifs));
-            }
-            else if (tsp_keyword == Tsplib::DEMAND_SECTION) {
-                cvrp.demands_.push_back(0); // 0要素目は0にしておく
-                for (int i=1; i <= cvrp.dimension_; i++) {
-                    unsigned int node_id, demand;
-                    ifs >> node_id >> demand;
-                    if (node_id != i)
-                        throw std::runtime_error("error:"
-                              "DEMAND_SECTION format may be different");
-                    cvrp.demands_.push_back(demand);
-                }
-            }
-            else if (tsp_keyword == Tsplib::EDGE_WEIGHT_TYPE) {
-                edge_weight_type = get_parameter(ifs);
-            }
-            else if (tsp_keyword == Tsplib::EDGE_WEIGHT_FORMAT) {
-                edge_weight_format = get_parameter(ifs);
-            }
-            else if (tsp_keyword == Tsplib::DISPLAY_DATA_TYPE) {
-                display_data_type = get_parameter(ifs);
-            }
-            else if (tsp_keyword == Tsplib::EDGE_WEIGHT_SECTION) {
-                if (edge_weight_format == Tsplib::EdgeWeightFormat::LOWER_ROW) {
-                    int num=0;
-                    for (int i=0; i < cvrp.dimension_; i++) {
-                        for (int j=0; j < i; j++) {
-                            int weight;
-                            ifs >> weight;
-                            cvrp.distances_.push_back(weight);
-                            num++;
-                        }
+            switch (keyword_map[tsp_keyword]) {
+
+                // The specification part
+                case NAME :
+                    cvrp.name_ = get_parameter(ifs);
+                    break;
+                case TYPE :
+                    {
+                        std::string not_use;
+                        getline(ifs, not_use);
                     }
-                    // n点からなる完全グラフの枝数はn * (n-1) / 2
-                    const int num_edges = cvrp.dimension_ * (cvrp.dimension_-1) / 2;
-                    if (num != num_edges)
-                        throw std::runtime_error("error:"
-                              "EDGE_WEIGHT_SECTION may be differnt");
-                }
-            }
-            else if (tsp_keyword == Tsplib::NODE_COORD_SECTION) {
-                int n=1, m, x, y;
-                while (n != cvrp.dimension_) {
-                    ifs >> n >> x >> y;
-                    std::pair<int,int> c(x,y);
-                    cvrp.coords_.push_back(c);
-                    n++;
-                }
-            }
-            else if (tsp_keyword == Tsplib::DEPOT_SECTION) {
-                cvrp.depot_ = stoi(get_parameter(ifs));
-                if (stoi(get_parameter(ifs)) != -1)
-                    throw std::runtime_error("error:"
-                          "can't handle multiple depots");
+                    break;
+                case COMMENT :
+                    {
+                        std::string not_use;
+                        getline(ifs, not_use);
+                    }
+                    break;
+                case DIMENSION :
+                    cvrp.dimension_ = stoi(get_parameter(ifs));
+                    break;
+                case CAPACITY :
+                    cvrp.capacity_ = stoi(get_parameter(ifs));
+                    break;
+                case EDGE_WEIGHT_TYPE :
+                    edge_weight_type = get_parameter(ifs);
+                    break;
+                case EDGE_WEIGHT_FORMAT :
+                    edge_weight_format = get_parameter(ifs);
+                    break;
+                case EDGE_DATA_FORMAT :
+                    {
+                        std::string not_use;
+                        getline(ifs, not_use);
+                        break;
+                    }
+                case NODE_COORD_TYPE :
+                    {
+                        std::string not_use;
+                        getline(ifs, not_use);
+                        break;
+                    }
+                case DISPLAY_DATA_TYPE :
+                    display_data_type = get_parameter(ifs);
+                    break;
+
+                // The data part
+                case NODE_COORD_SECTION :
+                    {
+                        int n=0, m, x, y; // m do not use
+                        for (int i=0; i != cvrp.dimension_; i++) {
+                            ifs >> m >> x >> y;
+                            std::pair<int,int> c(x,y);
+                            cvrp.coords_.push_back(c);
+                        }
+                        break;
+                    }
+                case DEPOT_SECTION :
+                    {
+                        cvrp.depot_ = stoi(get_parameter(ifs));
+                        if (stoi(get_parameter(ifs)) != -1)
+                            throw std::runtime_error("error:"
+                                    "can't handle multiple depots");
+                        break;
+                    }
+                case DEMAND_SECTION :
+                    {
+                        cvrp.demands_.push_back(0); // 0要素目は0にしておく
+                        for (int i=1; i <= cvrp.dimension_; i++) {
+                            unsigned int node_id, demand;
+                            ifs >> node_id >> demand;
+                            if (node_id != i)
+                                throw std::runtime_error("error:"
+                                        "DEMAND_SECTION format may be different");
+                            cvrp.demands_.push_back(demand);
+                        }
+                        break;
+                    }
+                case EDGE_DATA_SECTION :
+                    throw std::runtime_error("Sorry, can not handle 'EDGE_DATA_SECTION'");
+                    break;
+                case EDGE_WEIGHT_SECTION :
+                    {
+                        if (edge_weight_format != "LOWER_ROW")
+                            throw std::runtime_error("Sorry, can not handle except EDGE_WEIGHT_FORMAT == LOWER_ROW");
+                        for (int i=0; i < cvrp.dimension_; i++) {
+                            for (int j=0; j < i; j++) {
+                                int distance;
+                                ifs >> distance;
+                                cvrp.distances_.push_back(distance);
+                            }
+                        }
+                        break;
+                    }
+                case END_OF_FILE :
+                    // do nothing
+                    break;
+                default :
+                    throw std::runtime_error("error: unknown keyword '" + tsp_keyword + "'");
+                    break;
             }
         }
+
         // distancesの設定
         if (edge_weight_type != Tsplib::EdgeWeightType::EXPLICIT) {
             auto& distances = cvrp.distances_;
