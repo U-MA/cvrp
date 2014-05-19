@@ -40,16 +40,20 @@ namespace VrpSolver {
         return param;
     }
 
+    typedef std::string keyword;
+
     enum TsplibKeyword {
+        // The specification part
         NAME, TYPE, COMMENT, DIMENSION, CAPACITY,
         EDGE_WEIGHT_TYPE, EDGE_WEIGHT_FORMAT, EDGE_DATA_FORMAT,
-        NODE_COORD_TYPE, DISPLAY_DATA_TYPE,
+        NODE_COORD_TYPE, DISPLAY_DATA_TYPE, END_OF_FILE,
+
+        // The data part
         NODE_COORD_SECTION, DEPOT_SECTION, DEMAND_SECTION,
         EDGE_DATA_SECTION, EDGE_WEIGHT_SECTION,
-        END_OF_FILE
     };
 
-    std::map<std::string, TsplibKeyword> keyword_map = {
+    std::map<keyword, TsplibKeyword> keyword_map = {
         // The specification part
         { "NAME",                NAME },
         { "TYPE",                TYPE },
@@ -75,7 +79,7 @@ namespace VrpSolver {
         EXPLICIT, EUC_2D
     };
 
-    std::map<std::string, EdgeWeightType> ew_type_map = {
+    std::map<keyword, EdgeWeightType> ew_type_map = {
         { "EXPLICIT", EXPLICIT },
         { "EUC_2D",   EUC_2D }
     };
@@ -84,7 +88,7 @@ namespace VrpSolver {
         LOWER_ROW
     };
 
-    std::map<std::string, EdgeWeightFormat> ew_format_map = {
+    std::map<keyword, EdgeWeightFormat> ew_format_map = {
         { "LOWER_ROW", LOWER_ROW }
     };
 
@@ -98,7 +102,7 @@ namespace VrpSolver {
         EdgeWeightFormat edge_weight_format;
 
         while (ifs) {
-            std::string tsp_keyword;
+            keyword tsp_keyword;
             ifs >> tsp_keyword;
             if (ifs.eof()) break;
             trim(tsp_keyword, " :");
