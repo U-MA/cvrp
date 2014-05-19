@@ -94,7 +94,6 @@ namespace VrpSolver {
         if (!ifs)
             throw std::runtime_error("error: can't open file " + infile);
 
-        std::string      display_data_type;
         EdgeWeightType   edge_weight_type;
         EdgeWeightFormat edge_weight_format;
 
@@ -146,7 +145,10 @@ namespace VrpSolver {
                     }
                     break;
                 case DISPLAY_DATA_TYPE :
-                    display_data_type = get_parameter(ifs);
+                    {
+                        std::string not_use;
+                        getline(ifs, not_use);
+                    }
                     break;
                 case END_OF_FILE :
                     // do nothing
