@@ -50,6 +50,7 @@ namespace VrpSolver {
     };
 
     std::map<std::string, TsplibKeyword> keyword_map = {
+        // The specification part
         { "NAME",                NAME },
         { "TYPE",                TYPE },
         { "COMMENT",             COMMENT },
@@ -60,12 +61,14 @@ namespace VrpSolver {
         { "EDGE_DATA_FORMAT",    EDGE_DATA_FORMAT },
         { "NODE_COORD_TYPE",     NODE_COORD_TYPE },
         { "DISPLAY_DATA_TYPE",   DISPLAY_DATA_TYPE },
+        { "EOF",                 END_OF_FILE },
+
+        // The data part
         { "NODE_COORD_SECTION",  NODE_COORD_SECTION },
         { "DEPOT_SECTION",       DEPOT_SECTION },
         { "DEMAND_SECTION",      DEMAND_SECTION },
         { "EDGE_DATA_SECTION",   EDGE_DATA_SECTION },
-        { "EDGE_WEIGHT_SECTION", EDGE_WEIGHT_SECTION },
-        { "EOF",                 END_OF_FILE }
+        { "EDGE_WEIGHT_SECTION", EDGE_WEIGHT_SECTION }
     };
 
 
