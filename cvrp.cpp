@@ -121,16 +121,19 @@ namespace VrpSolver {
                     {
                         std::string not_use;
                         getline(ifs, not_use);
-                        break;
                     }
+                    break;
                 case NODE_COORD_TYPE :
                     {
                         std::string not_use;
                         getline(ifs, not_use);
-                        break;
                     }
+                    break;
                 case DISPLAY_DATA_TYPE :
                     display_data_type = get_parameter(ifs);
+                    break;
+                case END_OF_FILE :
+                    // do nothing
                     break;
 
                 // The data part
@@ -142,16 +145,16 @@ namespace VrpSolver {
                             std::pair<int,int> c(x,y);
                             cvrp.coords_.push_back(c);
                         }
-                        break;
                     }
+                    break;
                 case DEPOT_SECTION :
                     {
                         cvrp.depot_ = stoi(get_parameter(ifs));
                         if (stoi(get_parameter(ifs)) != -1)
                             throw std::runtime_error("error:"
                                     "can't handle multiple depots");
-                        break;
                     }
+                    break;
                 case DEMAND_SECTION :
                     {
                         cvrp.demands_.push_back(0); // 0要素目は0にしておく
@@ -163,8 +166,8 @@ namespace VrpSolver {
                                         "DEMAND_SECTION format may be different");
                             cvrp.demands_.push_back(demand);
                         }
-                        break;
                     }
+                    break;
                 case EDGE_DATA_SECTION :
                     throw std::runtime_error("Sorry, can not handle 'EDGE_DATA_SECTION'");
                     break;
@@ -179,11 +182,9 @@ namespace VrpSolver {
                                 cvrp.distances_.push_back(distance);
                             }
                         }
-                        break;
                     }
-                case END_OF_FILE :
-                    // do nothing
                     break;
+
                 default :
                     throw std::runtime_error("error: unknown keyword '" + tsp_keyword + "'");
                     break;
