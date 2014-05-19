@@ -55,7 +55,7 @@ namespace VrpSolver {
         { "COMMENT",             COMMENT },
         { "DIMENSION",           DIMENSION },
         { "CAPACITY",            CAPACITY },
-        { "EDGE_WEIGHT_TYPE",      EDGE_WEIGHT_TYPE },
+        { "EDGE_WEIGHT_TYPE",    EDGE_WEIGHT_TYPE },
         { "EDGE_WEIGHT_FORMAT",  EDGE_WEIGHT_FORMAT },
         { "EDGE_DATA_FORMAT",    EDGE_DATA_FORMAT },
         { "NODE_COORD_TYPE",     NODE_COORD_TYPE },
