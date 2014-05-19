@@ -9,20 +9,36 @@
 
 namespace VrpSolver {
 
+    void Cvrp::read_vrp(const std::string &infile) {
+        VrpSolver::read_vrp(problem_, infile);
+    }
+
+    std::string Cvrp::name() const {
+        return problem_->name_;
+    }
+
+    unsigned int Cvrp::dimension() const {
+        return problem_->dimension_;
+    }
+
+    unsigned int Cvrp::capacity() const {
+        return problem_->capacity_;
+    }
+
     unsigned int Cvrp::demand(unsigned int node_id) const {
-        if ((1 > node_id) || (node_id > dimension_))
+        if ((1 > node_id) || (node_id > problem_->dimension_))
             throw std::out_of_range("error: in Cvrp::demand");
-        return demands_[node_id];
+        return problem_->demands_[node_id];
     }
 
     int Cvrp::distance(unsigned int from, unsigned int to) const {
-        if ((1 > from) || (from > dimension_) ||
-            (1 > to) || (to > dimension_))
+        if ((1 > from) || (from > problem_->dimension_) ||
+            (1 > to) || (to > problem_->dimension_))
             throw std::out_of_range("error: in Cvrp::distance");
 
         const int index = (to > from) ? ((to-2)*(to-1)/2+(from-1)) :
                                         ((from-2)*(from-1)/2+(to-1));
-        return distances_[index];
+        return problem_->distances_[index];
     }
 
     // 文字列strからtrim_char文字列に含まれている文字を削除
@@ -93,7 +109,7 @@ namespace VrpSolver {
     };
 
     // infileから情報を読み取りCvrpクラスをセットアップする
-    void read_vrp(Cvrp& cvrp, const std::string &infile) {
+    void read_vrp(Problem *problem, const std::string &infile) {
         std::ifstream ifs(infile.c_str());
         if (!ifs)
             throw std::runtime_error("error: can't open file " + infile);
@@ -110,7 +126,7 @@ namespace VrpSolver {
 
                 // The specification part
                 case NAME :
-                    cvrp.name_ = get_parameter(ifs);
+                    problem->name_ = get_parameter(ifs);
                     break;
                 case TYPE :
                     {
@@ -125,10 +141,10 @@ namespace VrpSolver {
                     }
                     break;
                 case DIMENSION :
-                    cvrp.dimension_ = stoi(get_parameter(ifs));
+                    problem->dimension_ = stoi(get_parameter(ifs));
                     break;
                 case CAPACITY :
-                    cvrp.capacity_ = stoi(get_parameter(ifs));
+                    problem->capacity_ = stoi(get_parameter(ifs));
                     break;
                 case EDGE_WEIGHT_TYPE :
                     edge_weight_type = ew_type_map[get_parameter(ifs)];
@@ -162,16 +178,16 @@ namespace VrpSolver {
                 case NODE_COORD_SECTION :
                     {
                         int n=0, m, x, y; // m do not use
-                        for (int i=0; i != cvrp.dimension_; i++) {
+                        for (int i=0; i != problem->dimension_; i++) {
                             ifs >> m >> x >> y;
                             std::pair<int,int> c(x,y);
-                            cvrp.coords_.push_back(c);
+                            problem->coords_.push_back(c);
                         }
                     }
                     break;
                 case DEPOT_SECTION :
                     {
-                        cvrp.depot_ = stoi(get_parameter(ifs));
+                        problem->depot_ = stoi(get_parameter(ifs));
                         if (stoi(get_parameter(ifs)) != -1)
                             throw std::runtime_error("error:"
                                     "can't handle multiple depots");
@@ -179,14 +195,14 @@ namespace VrpSolver {
                     break;
                 case DEMAND_SECTION :
                     {
-                        cvrp.demands_.push_back(0); // 0要素目は0にしておく
-                        for (int i=1; i <= cvrp.dimension_; i++) {
+                        problem->demands_.push_back(0); // 0要素目は0にしておく
+                        for (int i=1; i <= problem->dimension_; i++) {
                             unsigned int node_id, demand;
                             ifs >> node_id >> demand;
                             if (node_id != i)
                                 throw std::runtime_error("error:"
                                         "DEMAND_SECTION format may be different");
-                            cvrp.demands_.push_back(demand);
+                            problem->demands_.push_back(demand);
                         }
                     }
                     break;
@@ -197,11 +213,11 @@ namespace VrpSolver {
                     {
                         if (edge_weight_format != LOWER_ROW)
                             throw std::runtime_error("Sorry, can not handle except EDGE_WEIGHT_FORMAT == LOWER_ROW");
-                        for (int i=0; i < cvrp.dimension_; i++) {
+                        for (int i=0; i < problem->dimension_; i++) {
                             for (int j=0; j < i; j++) {
                                 int distance;
                                 ifs >> distance;
-                                cvrp.distances_.push_back(distance);
+                                problem->distances_.push_back(distance);
                             }
                         }
                     }
@@ -215,9 +231,9 @@ namespace VrpSolver {
 
         // distancesの設定
         if (edge_weight_type != EXPLICIT) {
-            auto& distances = cvrp.distances_;
-            auto& coords    = cvrp.coords_;
-            for (int i=0; i < cvrp.dimension_; i++) {
+            auto& distances = problem->distances_;
+            auto& coords    = problem->coords_;
+            for (int i=0; i < problem->dimension_; i++) {
                 for (int j=0; j < i; j++) {
                     int dx = coords[j].first  - coords[i].first;
                     int dy = coords[j].second - coords[i].second;

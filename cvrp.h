@@ -7,17 +7,10 @@
 
 namespace VrpSolver {
 
-    class Cvrp {
-    public:
-        Cvrp() : name_(), dimension_(0), capacity_(0), demands_(0),
+    struct Problem {
+        Problem() : name_(""), dimension_(0), capacity_(0), demands_(0),
                  distances_(0), coords_(0) {}
 
-        // accessor
-        // node番号は1からdimension_まで
-        unsigned int demand(unsigned int node_id) const;
-        int distance(unsigned int from, unsigned int to) const;
-
-        // member variable
         std::string name_;
         unsigned int dimension_;
         unsigned int capacity_;
@@ -27,8 +20,24 @@ namespace VrpSolver {
         std::vector<std::pair<int,int>> coords_;
     };
 
+    class Cvrp {
+    public:
+        Cvrp() { problem_ = new Problem(); }
+
+        void read_vrp(const std::string &infile);
+
+        std::string name() const;
+        unsigned int dimension() const;
+        unsigned int capacity() const;
+        unsigned int demand(unsigned int node_id) const;
+        int distance(unsigned int from, unsigned int to) const;
+
+    private:
+        Problem *problem_;
+    };
+
     // cvrp intialize by infile
-    void read_vrp(Cvrp& cvrp, const std::string &infile);
+    void read_vrp(Problem *problem, const std::string &infile);
 
 } // namespace VrpSolver
 
