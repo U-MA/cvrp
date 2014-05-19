@@ -71,6 +71,22 @@ namespace VrpSolver {
         { "EDGE_WEIGHT_SECTION", EDGE_WEIGHT_SECTION }
     };
 
+    enum EdgeWeightType {
+        EXPLICIT, EUC_2D
+    };
+
+    std::map<std::string, EdgeWeightType> ew_type_map = {
+        { "EXPLICIT", EXPLICIT },
+        { "EUC_2D",   EUC_2D }
+    };
+
+    enum EdgeWeightFormat {
+        LOWER_ROW
+    };
+
+    std::map<std::string, EdgeWeightFormat> ew_format_map = {
+        { "LOWER_ROW", LOWER_ROW }
+    };
 
     // infileから情報を読み取りCvrpクラスをセットアップする
     void read_vrp(Cvrp& cvrp, const std::string &infile) {
@@ -78,9 +94,9 @@ namespace VrpSolver {
         if (!ifs)
             throw std::runtime_error("error: can't open file " + infile);
 
-        std::string edge_weight_type,
-                    edge_weight_format,
-                    display_data_type;
+        std::string      display_data_type;
+        EdgeWeightType   edge_weight_type;
+        EdgeWeightFormat edge_weight_format;
 
         while (ifs) {
             std::string tsp_keyword;
@@ -112,10 +128,10 @@ namespace VrpSolver {
                     cvrp.capacity_ = stoi(get_parameter(ifs));
                     break;
                 case EDGE_WEIGHT_TYPE :
-                    edge_weight_type = get_parameter(ifs);
+                    edge_weight_type = ew_type_map[get_parameter(ifs)];
                     break;
                 case EDGE_WEIGHT_FORMAT :
-                    edge_weight_format = get_parameter(ifs);
+                    edge_weight_format = ew_format_map[get_parameter(ifs)];
                     break;
                 case EDGE_DATA_FORMAT :
                     {
@@ -173,7 +189,7 @@ namespace VrpSolver {
                     break;
                 case EDGE_WEIGHT_SECTION :
                     {
-                        if (edge_weight_format != "LOWER_ROW")
+                        if (edge_weight_format != LOWER_ROW)
                             throw std::runtime_error("Sorry, can not handle except EDGE_WEIGHT_FORMAT == LOWER_ROW");
                         for (int i=0; i < cvrp.dimension_; i++) {
                             for (int j=0; j < i; j++) {
@@ -192,7 +208,7 @@ namespace VrpSolver {
         }
 
         // distancesの設定
-        if (edge_weight_type != Tsplib::EdgeWeightType::EXPLICIT) {
+        if (edge_weight_type != EXPLICIT) {
             auto& distances = cvrp.distances_;
             auto& coords    = cvrp.coords_;
             for (int i=0; i < cvrp.dimension_; i++) {
