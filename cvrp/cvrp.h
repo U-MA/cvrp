@@ -23,6 +23,7 @@ namespace VrpSolver {
     class Cvrp {
     public:
         Cvrp() { problem_ = new Problem(); }
+        ~Cvrp() { delete problem_; }
 
         void read_vrp(const std::string &infile);
 
