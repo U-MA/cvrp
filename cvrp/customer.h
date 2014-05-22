@@ -1,14 +1,12 @@
 #ifndef VRPSOLVER_CUSTOMER_H
 #define VRPSOLVER_CUSTOMER_H
 
-#include <utility>
-
 namespace VrpSolver {
 
     class Customer {
     public:
         Customer(unsigned int id, unsigned int demand) :
-            id_(id), demand_(demand), coord_(), distances_(0) {}
+            id_(id), demand_(demand) {}
 
         unsigned int id() const {
             return id_;
@@ -21,8 +19,6 @@ namespace VrpSolver {
     private:
         unsigned int id_;
         unsigned int demand_;
-        std::pair<int,int> coord_; // 自分の座標
-        std::vector<unsigned int> distances_; // 他の顧客との距離
     };
 
 } // namespace VrpSolver
