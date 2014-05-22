@@ -11,7 +11,7 @@ namespace VrpSolver {
     class Vehicle {
     public:
         Vehicle(unsigned int max_capacity) :
-            route_(), capacity_(0), max_capacity_(max_capacity) {}
+            route_(), last_(Customer(1,0)), capacity_(0), max_capacity_(max_capacity) {}
 
         unsigned int capacity() const {
             return capacity_;
