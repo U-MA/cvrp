@@ -1,3 +1,4 @@
+#include <iostream>
 #include <cmath>
 #include <fstream>
 #include <map>
@@ -5,12 +6,20 @@
 #include <stdexcept>
 
 #include "cvrp.h"
-#include "tsplib_format.h"
 
 namespace VrpSolver {
 
     void Cvrp::read_vrp(const std::string &infile) {
         VrpSolver::read_vrp(problem_, infile);
+
+        // 車体数の設定(TSPLIB formatでは明示的に示されていないので
+        // ファイル名から読み取る
+        size_t i = infile.rfind('k');
+        size_t j = infile.rfind('.');
+        std::istringstream iss(infile.substr(i+1, j));
+        iss >> num_vehicles_;
+        if (!iss)
+            throw std::runtime_error("error: can not read number of vehicles");
     }
 
     std::string Cvrp::name() const {
@@ -28,7 +37,11 @@ namespace VrpSolver {
     unsigned int Cvrp::demand(unsigned int node_id) const {
         if ((1 > node_id) || (node_id > problem_->dimension_))
             throw std::out_of_range("error: in Cvrp::demand");
-        return problem_->demands_[node_id];
+        return problem_->customers_[node_id].demand();
+    }
+
+    unsigned int Cvrp::num_vehicles() const {
+        return num_vehicles_;
     }
 
     int Cvrp::distance(unsigned int from, unsigned int to) const {
@@ -195,14 +208,14 @@ namespace VrpSolver {
                     break;
                 case DEMAND_SECTION :
                     {
-                        problem->demands_.push_back(0); // 0要素目は0にしておく
+                        problem->customers_.push_back(Customer(0,0)); // 0番目は使用しない
                         for (int i=1; i <= problem->dimension_; i++) {
                             unsigned int node_id, demand;
                             ifs >> node_id >> demand;
                             if (node_id != i)
                                 throw std::runtime_error("error:"
                                         "DEMAND_SECTION format may be different");
-                            problem->demands_.push_back(demand);
+                            problem->customers_.push_back(Customer(node_id, demand));
                         }
                     }
                     break;
