@@ -58,6 +58,10 @@ namespace VrpSolver {
         return &(problem_->distances_);
     }
 
+    const CustomerList &Cvrp::customer_list() const {
+        return problem_->customers_;
+    }
+
     // 文字列strからtrim_char文字列に含まれている文字を削除
     void trim(std::string& str, const std::string& trim_char) {
         size_t pos;

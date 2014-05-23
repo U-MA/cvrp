@@ -10,6 +10,7 @@
 namespace VrpSolver {
 
     typedef std::vector<unsigned int> Distance;
+    typedef std::vector<Customer>     CustomerList;
     typedef std::pair<int, int>       Point;
 
     struct Problem {
@@ -40,6 +41,7 @@ namespace VrpSolver {
         unsigned int num_vehicles() const;
         unsigned int distance(unsigned int from, unsigned int to) const;
         const Distance *distance_list() const;
+        const CustomerList &customer_list() const;
 
     private:
         Problem *problem_;
