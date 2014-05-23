@@ -17,6 +17,7 @@ namespace VrpSolver {
         }
 
     private:
+        Customer();
         unsigned int id_;
         unsigned int demand_;
     };
