@@ -9,9 +9,10 @@
 
 namespace VrpSolver {
 
-    struct Problem {
-        typedef std::vector<Customer> CustomerList;
+    typedef std::vector<unsigned int> Distance;
+    typedef std::pair<int, int>       Point;
 
+    struct Problem {
         Problem() : name_(""), dimension_(0), capacity_(0),
                  distances_(0), customers_(), coords_(0) {}
 
@@ -19,9 +20,9 @@ namespace VrpSolver {
         unsigned int dimension_;
         unsigned int capacity_;
         unsigned int depot_;
-        std::vector<int> distances_;
+        Distance distances_;
         std::vector<Customer> customers_;
-        std::vector<std::pair<int,int>> coords_;
+        std::vector<Point> coords_;
     };
 
     class Cvrp {
@@ -38,6 +39,7 @@ namespace VrpSolver {
         unsigned int demand(unsigned int node_id) const;
         unsigned int num_vehicles() const;
         int distance(unsigned int from, unsigned int to) const;
+        const Distance *distance_list() const;
 
     private:
         Problem *problem_;
