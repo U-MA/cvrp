@@ -9,7 +9,7 @@
 
 namespace VrpSolver {
 
-    typedef std::vector<unsigned int> Distance;
+    typedef std::vector<unsigned int> DistanceList;
     typedef std::vector<Customer>     CustomerList;
     typedef std::pair<int, int>       Point;
 
@@ -21,7 +21,7 @@ namespace VrpSolver {
         unsigned int dimension_;
         unsigned int capacity_;
         unsigned int depot_;
-        Distance distances_;
+        DistanceList distances_;
         CustomerList customers_;
         std::vector<Point> coords_;
     };
@@ -40,7 +40,7 @@ namespace VrpSolver {
         unsigned int demand(unsigned int node_id) const;
         unsigned int num_vehicles() const;
         unsigned int distance(unsigned int from, unsigned int to) const;
-        const Distance *distance_list() const;
+        const DistanceList &distance_list() const;
         const CustomerList &customer_list() const;
 
     private:

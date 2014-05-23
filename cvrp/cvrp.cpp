@@ -54,8 +54,8 @@ namespace VrpSolver {
         return problem_->distances_[index];
     }
 
-    const Distance *Cvrp::distance_list() const {
-        return &(problem_->distances_);
+    const DistanceList &Cvrp::distance_list() const {
+        return problem_->distances_;
     }
 
     const CustomerList &Cvrp::customer_list() const {
