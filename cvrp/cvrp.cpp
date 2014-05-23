@@ -44,7 +44,7 @@ namespace VrpSolver {
         return num_vehicles_;
     }
 
-    int Cvrp::distance(unsigned int from, unsigned int to) const {
+    unsigned int Cvrp::distance(unsigned int from, unsigned int to) const {
         if ((1 > from) || (from > problem_->dimension_) ||
             (1 > to) || (to > problem_->dimension_))
             throw std::out_of_range("error: in Cvrp::distance");

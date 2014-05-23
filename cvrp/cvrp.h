@@ -38,7 +38,7 @@ namespace VrpSolver {
         unsigned int capacity() const;
         unsigned int demand(unsigned int node_id) const;
         unsigned int num_vehicles() const;
-        int distance(unsigned int from, unsigned int to) const;
+        unsigned int distance(unsigned int from, unsigned int to) const;
         const Distance *distance_list() const;
 
     private:
