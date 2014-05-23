@@ -50,6 +50,9 @@ namespace VrpSolver {
 
     void read_vrp(Problem *problem, const std::string &infile);
 
+    unsigned int distance(const DistanceList& dlist,
+                          const Customer& from, const Customer& to);
+
 } // namespace VrpSolver
 
 #endif // VRPSOLVER_CVRP_H

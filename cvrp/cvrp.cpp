@@ -62,6 +62,15 @@ namespace VrpSolver {
         return problem_->customers_;
     }
 
+    unsigned int distance(const DistanceList& dlist, 
+                          const Customer& c1, const Customer& c2) {
+        const int from = c1.id();
+        const int to   = c2.id();
+        const int index = (to > from) ? ((to-2)*(to-1)/2+(from-1)) :
+                                        ((from-2)*(from-1)/2+(to-1));
+        return dlist[index];
+    }
+
     // 文字列strからtrim_char文字列に含まれている文字を削除
     void trim(std::string& str, const std::string& trim_char) {
         size_t pos;
