@@ -14,7 +14,7 @@ namespace VrpSolver {
     typedef std::pair<int, int>       Point;
 
     struct Problem {
-        Problem() : name_(""), dimension_(0), capacity_(0),
+        Problem() : name_(""), dimension_(0), capacity_(0), depot_(0),
                     distances_(0), customers_(), coords_(0) {}
 
         std::string name_;
