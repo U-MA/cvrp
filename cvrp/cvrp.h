@@ -22,7 +22,7 @@ namespace VrpSolver {
         unsigned int capacity_;
         unsigned int depot_;
         Distance distances_;
-        std::vector<Customer> customers_;
+        CustomerList customers_;
         std::vector<Point> coords_;
     };
 
