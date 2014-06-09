@@ -5,8 +5,8 @@ namespace VrpSolver {
 
     class Customer {
     public:
-        Customer(unsigned int id, unsigned int demand) :
-            id_(id), demand_(demand) {}
+        Customer(unsigned int id, unsigned int demand)
+            : id_(id), demand_(demand) {}
 
         unsigned int id() const {
             return id_;
