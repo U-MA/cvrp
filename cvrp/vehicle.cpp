@@ -12,7 +12,7 @@ namespace VrpSolver {
         const int to   = c2.id();
         const int index = (to > from) ? ((to-2)*(to-1)/2+(from-1)) :
                                         ((from-2)*(from-1)/2+(to-1));
-        return (*distance_)[index];
+        return distance_[index];
     }
 
     unsigned int Vehicle::mileage() const {

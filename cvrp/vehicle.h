@@ -5,14 +5,14 @@
 #include <vector>
 
 #include <cvrp/customer.h>
-#include <cvrp/cvrp.h> // for Distance type
+#include <cvrp/cvrp.h> // for DistanceList
 
 namespace VrpSolver {
 
     class Vehicle {
     public:
         Vehicle(unsigned int max_capacity,
-                const Distance *distance) :
+                const DistanceList &distance) :
             route_(), current_(Customer(1,0)), mileage_(0),
             capacity_(0), max_capacity_(max_capacity), distance_(distance) {}
 
@@ -34,7 +34,7 @@ namespace VrpSolver {
         unsigned int mileage_;
         unsigned int capacity_;
         unsigned int max_capacity_; // 最大容量
-        const Distance *distance_;
+        const DistanceList &distance_;
 
         // Vehicleが保持しているroute_を出力する
         friend std::ostream& operator<<(std::ostream& ost, const Vehicle& v);
