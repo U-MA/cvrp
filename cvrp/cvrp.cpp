@@ -227,14 +227,17 @@ namespace VrpSolver {
                     break;
                 case DEMAND_SECTION :
                     {
-                        problem->customers_.push_back(Customer(0,0)); // 0番目は使用しない
-                        for (int i=1; i <= problem->dimension_; i++) {
-                            unsigned int node_id, demand;
+                        // demandの番号は1であると仮定
+                        // Customerのidは0から開始するためにnode_idから
+                        // 2を引いている
+                        unsigned int node_id, demand;
+                        ifs >> node_id >> demand; // depotの情報は捨てる
+                        for (int i=0; i < problem->dimension_-1; i++) {
                             ifs >> node_id >> demand;
-                            if (node_id != i)
+                            if (node_id-2 != i)
                                 throw std::runtime_error("error:"
                                         "DEMAND_SECTION format may be different");
-                            problem->customers_.push_back(Customer(node_id, demand));
+                            problem->customers_.push_back(Customer(node_id-2, demand));
                         }
                     }
                     break;
