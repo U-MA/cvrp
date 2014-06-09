@@ -9,6 +9,8 @@
 
 namespace VrpSolver {
 
+    void read_vrp(Problem *, const std::string &infile);
+
     void Cvrp::read_vrp(const std::string &infile) {
         VrpSolver::read_vrp(problem_, infile);
 
