@@ -47,12 +47,12 @@ namespace VrpSolver {
     }
 
     unsigned int Cvrp::distance(unsigned int from, unsigned int to) const {
-        if ((1 > from) || (from > problem_->dimension_) ||
-            (1 > to) || (to > problem_->dimension_))
+        if ((0 > from) || (from > problem_->dimension_) ||
+            (0 > to) || (to > problem_->dimension_))
             throw std::out_of_range("error: in Cvrp::distance");
 
-        const int index = (to > from) ? ((to-2)*(to-1)/2+(from-1)) :
-                                        ((from-2)*(from-1)/2+(to-1));
+        const int index = (to > from) ? ((to-1)*(to)/2+(from)) :
+                                        ((from-1)*(from)/2+(to));
         return problem_->distances_[index];
     }
 
@@ -146,8 +146,8 @@ namespace VrpSolver {
         if (!ifs)
             throw std::runtime_error("error: can't open file " + infile);
 
-        EdgeWeightType   edge_weight_type;
-        EdgeWeightFormat edge_weight_format;
+        EdgeWeightType   edge_weight_type = EXPLICIT;
+        EdgeWeightFormat edge_weight_format = LOWER_ROW;
 
         while (ifs) {
             keyword tsp_keyword;
@@ -209,8 +209,8 @@ namespace VrpSolver {
                 // The data part
                 case NODE_COORD_SECTION :
                     {
-                        int n=0, m, x, y; // m do not use
-                        for (int i=0; i != problem->dimension_; i++) {
+                        int m, x, y; // m do not use
+                        for (int i=0; i != static_cast<int>(problem->dimension_); i++) {
                             ifs >> m >> x >> y;
                             std::pair<int,int> c(x,y);
                             problem->coords_.push_back(c);
@@ -232,9 +232,9 @@ namespace VrpSolver {
                         // 2を引いている
                         unsigned int node_id, demand;
                         ifs >> node_id >> demand; // depotの情報は捨てる
-                        for (int i=0; i < problem->dimension_-1; i++) {
+                        for (int i=0; i < static_cast<int>(problem->dimension_-1); i++) {
                             ifs >> node_id >> demand;
-                            if (node_id-2 != i)
+                            if (static_cast<int>(node_id-2) != i)
                                 throw std::runtime_error("error:"
                                         "DEMAND_SECTION format may be different");
                             problem->customers_.push_back(Customer(node_id-1, demand));
@@ -248,7 +248,7 @@ namespace VrpSolver {
                     {
                         if (edge_weight_format != LOWER_ROW)
                             throw std::runtime_error("Sorry, can not handle except EDGE_WEIGHT_FORMAT == LOWER_ROW");
-                        for (int i=0; i < problem->dimension_; i++) {
+                        for (int i=0; i < static_cast<int>(problem->dimension_); i++) {
                             for (int j=0; j < i; j++) {
                                 int distance;
                                 ifs >> distance;
@@ -268,7 +268,7 @@ namespace VrpSolver {
         if (edge_weight_type != EXPLICIT) {
             auto& distances = problem->distances_;
             auto& coords    = problem->coords_;
-            for (int i=0; i < problem->dimension_; i++) {
+            for (int i=0; i < static_cast<int>(problem->dimension_); i++) {
                 for (int j=0; j < i; j++) {
                     int dx = coords[j].first  - coords[i].first;
                     int dy = coords[j].second - coords[i].second;

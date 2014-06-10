@@ -31,7 +31,7 @@ namespace VrpSolver {
 
     std::ostream& operator<<(std::ostream& ost, const Vehicle& v) {
         auto route = v.route_;
-        for (int i=0; i < route.size(); i++)
+        for (int i=0; i < static_cast<int>(route.size()); i++)
             ost << route[i].id() << " ";
         return ost;
     }
