@@ -21,7 +21,7 @@ namespace VrpSolver {
     }
 
     void Vehicle::visit(const Customer& c) {
-        if (capacity_ + c.demand() > max_capacity_)
+        if (!can_visit(c))
             throw std::runtime_error("vehicle overloaded");
         capacity_ += c.demand();
         mileage_  += distance(current_, c);
