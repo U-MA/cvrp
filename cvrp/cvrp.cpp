@@ -237,7 +237,7 @@ namespace VrpSolver {
                             if (node_id-2 != i)
                                 throw std::runtime_error("error:"
                                         "DEMAND_SECTION format may be different");
-                            problem->customers_.push_back(Customer(node_id-2, demand));
+                            problem->customers_.push_back(Customer(node_id-1, demand));
                         }
                     }
                     break;
