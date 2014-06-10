@@ -26,6 +26,9 @@ namespace VrpSolver {
         // 顧客cを訪問する
         void visit(const Customer& c);
 
+        // 顧客cを訪問可能か
+        bool can_visit(const Customer& c) const;
+
     private:
         int distance(const Customer &from, const Customer &to) const;
 

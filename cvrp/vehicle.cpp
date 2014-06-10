@@ -29,6 +29,10 @@ namespace VrpSolver {
         current_ = c;
     }
 
+    bool Vehicle::can_visit(const Customer& c) const {
+        return capacity_ + c.demand() <= max_capacity_;
+    }
+
     std::ostream& operator<<(std::ostream& ost, const Vehicle& v) {
         auto route = v.route_;
         for (int i=0; i < static_cast<int>(route.size()); i++)
