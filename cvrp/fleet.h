@@ -72,10 +72,10 @@ namespace VrpSolver {
         std::vector<Vehicle>::iterator end()
         { return fleet_.end(); }
 
-        bool is_visit(size_t id)
+        bool is_visit(size_t id) const
         { return is_visit_.test(id); }
 
-        bool is_visit(const Customer& c)
+        bool is_visit(const Customer& c) const
         { return is_visit_.test(c.id()); }
 
         bool is_feasible(size_t dimension)
