@@ -8,7 +8,8 @@
 
 namespace VrpSolver {
 
-    void visit_randomly(const Cvrp& cvrp, Fleet& fleet, unsigned int seed = 2014) {
+    void visit_randomly(const Cvrp& cvrp, Fleet& fleet,
+                        unsigned int seed = 2014) {
         srand(seed);
         const CustomerList& customer_list = cvrp.customer_list();
         for (auto& v : fleet) {
