@@ -75,6 +75,9 @@ namespace VrpSolver {
         bool is_visit(size_t id)
         { return is_visit_.test(id); }
 
+        bool is_visit(const Customer& c)
+        { return is_visit_.test(c.id()); }
+
         bool is_feasible(size_t dimension)
         { return is_visit_.count() == dimension; }
 
