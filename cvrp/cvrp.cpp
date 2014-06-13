@@ -68,8 +68,8 @@ namespace VrpSolver {
                           const Customer& c1, const Customer& c2) {
         const int from = c1.id();
         const int to   = c2.id();
-        const int index = (to > from) ? ((to-2)*(to-1)/2+(from-1)) :
-                                        ((from-2)*(from-1)/2+(to-1));
+        const int index = (to > from) ? ((to-1)*(to)/2+(from)) :
+                                        ((from-1)*(from)/2+(to));
         return dlist[index];
     }
 
@@ -227,9 +227,9 @@ namespace VrpSolver {
                     break;
                 case DEMAND_SECTION :
                     {
-                        // demandの番号は1であると仮定
-                        // Customerのidは0から開始するためにnode_idから
-                        // 2を引いている
+                        // depotの番号は1であると仮定
+                        // Customerのidは1から開始するためにnode_idから
+                        // 1を引いている
                         unsigned int node_id, demand;
                         ifs >> node_id >> demand; // depotの情報は捨てる
                         for (int i=0; i < static_cast<int>(problem->dimension_-1); i++) {
