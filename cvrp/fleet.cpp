@@ -13,13 +13,13 @@ namespace VrpSolver {
     int Vehicle::distance(const Customer &c1, const Customer &c2) const {
         const int from = c1.id();
         const int to   = c2.id();
-        const int index = (to > from) ? ((to-2)*(to-1)/2+(from-1)) :
-                                        ((from-2)*(from-1)/2+(to-1));
+        const int index = (to > from) ? ((to-1)*(to)/2+(from)) :
+                                        ((from-1)*(from)/2+(to));
         return distance_[index];
     }
 
     unsigned int Vehicle::mileage() const {
-        Customer depot(1, 0);
+        Customer depot(0, 0);
         return mileage_ + distance(current_, depot);
     }
 
