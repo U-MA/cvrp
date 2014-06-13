@@ -15,7 +15,7 @@ namespace VrpSolver {
             while (1) {
                 CustomerList candidates;
                 for (auto c : customer_list) {
-                    if (!fleet.is_visit(c.id()) && v.can_visit(c))
+                    if (!fleet.is_visit(c) && v.can_visit(c))
                         candidates.push_back(c);
                 }
 
