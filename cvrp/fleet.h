@@ -37,12 +37,12 @@ namespace VrpSolver {
         int distance(const Customer &from, const Customer &to) const;
 
         std::vector<Customer> route_;
-        Customer current_;          // 最後に訪問した顧客
+        Customer current_;             // 最後に訪問した顧客
         unsigned int mileage_;
         unsigned int capacity_;
-        unsigned int max_capacity_; // 最大容量
+        unsigned int max_capacity_;    // 最大容量
         const DistanceList &distance_;
-        Fleet* fleet_; // 所属している車団
+        Fleet* fleet_;                 // 所属している車団
 
         // Vehicleが保持しているroute_を出力する
         friend std::ostream& operator<<(std::ostream& ost, const Vehicle& v);
