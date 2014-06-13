@@ -16,7 +16,7 @@ namespace VrpSolver {
     public:
         Vehicle(unsigned int max_capacity, const DistanceList &distance,
                 Fleet* fleet = nullptr) :
-            route_(), current_(Customer(1,0)), mileage_(0), capacity_(0),
+            route_(), current_(Customer(0,0)), mileage_(0), capacity_(0),
             max_capacity_(max_capacity), distance_(distance), fleet_(fleet) {}
 
         unsigned int capacity() const {
