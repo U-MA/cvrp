@@ -38,14 +38,14 @@ namespace VrpSolver {
         unsigned int dimension() const;
         unsigned int capacity() const;
         unsigned int demand(unsigned int node_id) const;
-        unsigned int num_vehicles() const;
+        size_t num_vehicles() const;
         unsigned int distance(unsigned int from, unsigned int to) const;
         const DistanceList &distance_list() const;
         const CustomerList &customer_list() const;
 
     private:
         Problem *problem_;
-        unsigned int num_vehicles_;
+        size_t num_vehicles_;
     };
 
     unsigned int distance(const DistanceList& dlist,

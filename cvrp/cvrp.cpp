@@ -42,7 +42,7 @@ namespace VrpSolver {
         return problem_->customers_[node_id].demand();
     }
 
-    unsigned int Cvrp::num_vehicles() const {
+    size_t Cvrp::num_vehicles() const {
         return num_vehicles_;
     }
 
