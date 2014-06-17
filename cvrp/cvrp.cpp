@@ -53,15 +53,15 @@ namespace VrpSolver {
 
         const int index = (to > from) ? ((to-1)*(to)/2+(from)) :
                                         ((from-1)*(from)/2+(to));
-        return problem_->distances_[index];
+        return problem_->graph_.distance_list_[index];
     }
 
     const DistanceList &Cvrp::distance_list() const {
-        return problem_->distances_;
+        return problem_->graph_.distance_list_;
     }
 
     const CustomerList &Cvrp::customer_list() const {
-        return problem_->customers_;
+        return problem_->graph_.customer_list_;
     }
 
     unsigned int distance(const DistanceList& dlist, 
@@ -238,6 +238,7 @@ namespace VrpSolver {
                                 throw std::runtime_error("error:"
                                         "DEMAND_SECTION format may be different");
                             problem->customers_.push_back(Customer(node_id-1, demand));
+                            problem->graph_.customer_list_.push_back(Customer(node_id-1, demand));
                         }
                     }
                     break;
@@ -253,6 +254,7 @@ namespace VrpSolver {
                                 int distance;
                                 ifs >> distance;
                                 problem->distances_.push_back(distance);
+                                problem->graph_.distance_list_.push_back(distance);
                             }
                         }
                     }
@@ -273,6 +275,7 @@ namespace VrpSolver {
                     int dx = coords[j].first  - coords[i].first;
                     int dy = coords[j].second - coords[i].second;
                     distances.push_back(floor(sqrt(dx*dx + dy*dy)+0.5));
+                    problem->graph_.distance_list_.push_back(floor(sqrt(dx*dx + dy*dy)+0.5));
                 }
             }
         }
