@@ -20,14 +20,12 @@ namespace VrpSolver {
 
     struct Problem {
         Problem() : name_(""), dimension_(0), capacity_(0), depot_(0),
-                    distances_(0), customers_(), coords_(0) {}
+                    coords_(0) {}
 
         std::string name_;
         unsigned int dimension_;
         unsigned int capacity_;
         unsigned int depot_;
-        DistanceList distances_;
-        CustomerList customers_;
         std::vector<Point> coords_;
         Graph graph_;
     };

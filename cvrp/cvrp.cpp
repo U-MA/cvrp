@@ -39,7 +39,7 @@ namespace VrpSolver {
     unsigned int Cvrp::demand(unsigned int node_id) const {
         if ((1 > node_id) || (node_id > problem_->dimension_))
             throw std::out_of_range("error: in Cvrp::demand");
-        return problem_->customers_[node_id].demand();
+        return problem_->graph_.customer_list_[node_id].demand();
     }
 
     size_t Cvrp::num_vehicles() const {
@@ -237,7 +237,6 @@ namespace VrpSolver {
                             if (static_cast<int>(node_id-2) != i)
                                 throw std::runtime_error("error:"
                                         "DEMAND_SECTION format may be different");
-                            problem->customers_.push_back(Customer(node_id-1, demand));
                             problem->graph_.customer_list_.push_back(Customer(node_id-1, demand));
                         }
                     }
@@ -253,7 +252,6 @@ namespace VrpSolver {
                             for (int j=0; j < i; j++) {
                                 int distance;
                                 ifs >> distance;
-                                problem->distances_.push_back(distance);
                                 problem->graph_.distance_list_.push_back(distance);
                             }
                         }
@@ -268,14 +266,13 @@ namespace VrpSolver {
 
         // distancesの設定
         if (edge_weight_type != EXPLICIT) {
-            auto& distances = problem->distances_;
+            auto& distances = problem->graph_.distance_list_;
             auto& coords    = problem->coords_;
             for (int i=0; i < static_cast<int>(problem->dimension_); i++) {
                 for (int j=0; j < i; j++) {
                     int dx = coords[j].first  - coords[i].first;
                     int dy = coords[j].second - coords[i].second;
                     distances.push_back(floor(sqrt(dx*dx + dy*dy)+0.5));
-                    problem->graph_.distance_list_.push_back(floor(sqrt(dx*dx + dy*dy)+0.5));
                 }
             }
         }
