@@ -51,12 +51,12 @@ namespace VrpSolver {
     class Fleet {
     public:
         Fleet(size_t size, unsigned int max_capacity,
-              const DistanceList& distance_list)
+              const Graph& graph)
             : size_(size), max_capacity_(max_capacity),
-              distance_list_(distance_list), fleet_()
+              fleet_(), graph_(graph)
         {
             for (size_t i=0; i < size; i++)
-                fleet_.push_back(Vehicle(max_capacity, distance_list, this));
+                fleet_.push_back(Vehicle(max_capacity, graph.distance_list_, this));
             is_visit_.set(0);
         }
 
@@ -80,13 +80,16 @@ namespace VrpSolver {
         bool is_feasible(size_t dimension)
         { return is_visit_.count() == dimension; }
 
+        const Graph& graph() const
+        { return graph_; }
+
         std::bitset<101> is_visit_;
 
     private:
         size_t size_;
         unsigned int max_capacity_;
-        const DistanceList& distance_list_;
         std::vector<Vehicle> fleet_;
+        const Graph& graph_;
 
     public:
         Fleet() = delete;
