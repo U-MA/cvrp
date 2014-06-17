@@ -46,6 +46,8 @@ namespace VrpSolver {
         unsigned int distance(unsigned int from, unsigned int to) const;
         const DistanceList &distance_list() const;
         const CustomerList &customer_list() const;
+        const Graph &graph() const
+        { return problem_->graph_; }
 
     private:
         Problem *problem_;
