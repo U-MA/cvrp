@@ -3,16 +3,16 @@
 
 namespace VrpSolver {
 
-    template <VehicleT>
+    template <class VehicleT>
     struct vehicle_traits
     {
         typedef VehicleT vehicle_type;
         typedef typename VehicleT::customer_type customer_type;
 
-        static size_t capacity(const vehicle_type& v)
+        static std::size_t capacity(const vehicle_type& v)
         { return v.capacity(); }
 
-        static size_t distance(const vehicle_type& v)
+        static std::size_t distance(const vehicle_type& v)
         { return v.distance(); }
 
         static bool can_visit(const vehicle_type& v, const customer_type& c)
@@ -36,9 +36,9 @@ namespace VrpSolver {
     }
 
     template <class VehicleT>
-    bool can_visit(const VehicleT& v, size_t demand)
+    bool can_visit(const VehicleT& v, const typename VehicleT::customer_type& c)
     {
-        return vehicle_traits<VehicleT>::can_visit(v, demand);
+        return vehicle_traits<VehicleT>::can_visit(v, c);
     }
 
     template <class VehicleT>
@@ -48,3 +48,5 @@ namespace VrpSolver {
     }
 
 } // namespace VrpSolver
+
+#endif // VRPSOLVER_VEHICLE_TRAITS_H
