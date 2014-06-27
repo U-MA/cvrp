@@ -22,4 +22,29 @@ namespace VrpSolver {
         { v.visit(c); }
     };
 
+    // free function
+    template <class VehicleT>
+    size_t capacity(const VehicleT& v)
+    {
+        return vehicle_traits<VehicleT>::capacity(v);
+    }
+
+    template <class VehicleT>
+    size_t distance(const VehicleT& v)
+    {
+        return vehicle_traits<VehicleT>::distance(v);
+    }
+
+    template <class VehicleT>
+    bool can_visit(const VehicleT& v, size_t demand)
+    {
+        return vehicle_traits<VehicleT>::can_visit(v, demand);
+    }
+
+    template <class VehicleT>
+    void visit(VehicleT& v, typename VehicleT::customer_type& c)
+    {
+        vehicle_traits<VehicleT>::visit(v, c);
+    }
+
 } // namespace VrpSolver
