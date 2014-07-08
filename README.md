@@ -1,8 +1,12 @@
 cvrp
 ====
 
-VRPファイルを読み取り, それをVRPクラスに格納する
+A easy implementation of Capacitated Vehicle Routing Problem.
 
-- depot,顧客の識別  
-depot == 0
-customer > 0
+Components
+====
+
+- Cvrp
+- Customer
+- Vehicle
+- Fleet
