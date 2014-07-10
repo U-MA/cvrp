@@ -18,7 +18,7 @@ namespace VrpSolver {
         return distance_[index];
     }
 
-    unsigned int Vehicle::mileage() const {
+    std::size_t Vehicle::mileage() const {
         if (route_.empty()) return 0;
         Customer depot(0, 0);
         return mileage_ + distance(current_, depot);
