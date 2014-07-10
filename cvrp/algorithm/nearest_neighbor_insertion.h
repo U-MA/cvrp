@@ -3,6 +3,7 @@
 
 #include <cvrp/cvrp.h>
 #include <cvrp/fleet.h>
+#include <cvrp/vehicle_traits.h>
 
 namespace VrpSolver {
 
@@ -13,7 +14,7 @@ namespace VrpSolver {
             while (1) {
                 CustomerList candidates;
                 for (auto c : customer_list) {
-                    if (!fleet.is_visit(c) && v.can_visit(c))
+                    if (!fleet.is_visit(c) && can_visit(v, c))
                         candidates.push_back(c);
                 }
 
@@ -28,7 +29,7 @@ namespace VrpSolver {
                         next = c;
                     }
                 }
-                v.visit(next);
+                visit(v, next);
             }
         }
     }
