@@ -36,7 +36,6 @@ namespace VrpSolver {
         Cvrp() { problem_ = new Problem(); }
         ~Cvrp() { delete problem_; }
 
-
         std::string name() const {
             return problem_->name_;
         }
