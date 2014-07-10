@@ -39,12 +39,12 @@ namespace VrpSolver {
         int distance(const customer_type& from, const customer_type& to) const;
 
         std::vector<customer_type> route_;
-        customer_type current_;             // 最後に訪問した顧客
-        unsigned int mileage_;
-        unsigned int capacity_;
-        std::size_t max_capacity_;    // 最大容量
-        const DistanceList& distance_;
-        Fleet* fleet_;                 // 所属している車団
+        customer_type              current_;       // 最後に訪問した顧客
+        unsigned int               mileage_;
+        unsigned int               capacity_;
+        std::size_t                max_capacity_;  // 最大容量
+        const DistanceList&        distance_;
+        Fleet*                     fleet_;         // 所属している車団
 
         // Vehicleが保持しているroute_を出力する
         friend std::ostream& operator<<(std::ostream& ost, const Vehicle& v);
@@ -89,10 +89,10 @@ namespace VrpSolver {
         std::bitset<101> is_visit_;
 
     private:
-        size_t size_;
-        unsigned int max_capacity_;
+        size_t               size_;
+        unsigned int         max_capacity_;
         std::vector<Vehicle> fleet_;
-        const Graph& graph_;
+        const Graph&         graph_;
 
     public:
         Fleet() = delete;
