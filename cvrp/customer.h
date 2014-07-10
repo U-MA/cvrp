@@ -5,21 +5,21 @@ namespace VrpSolver {
 
     class Customer {
     public:
-        Customer(unsigned int id, unsigned int demand)
+        Customer(unsigned int id, std::size_t demand)
             : id_(id), demand_(demand) {}
 
         unsigned int id() const {
             return id_;
         }
 
-        unsigned int demand() const {
+        std::size_t demand() const {
             return demand_;
         }
 
     private:
         Customer();
         unsigned int id_;
-        unsigned int demand_;
+        std::size_t demand_;
     };
 
 } // namespace VrpSolver
