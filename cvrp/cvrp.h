@@ -45,13 +45,13 @@ namespace VrpSolver {
         std::size_t demand(unsigned int node_id) const;
         std::size_t num_vehicles() const;
         std::size_t distance(unsigned int from, unsigned int to) const;
-        const DistanceList &distance_list() const;
-        const CustomerList &customer_list() const;
-        const Graph &graph() const
+        const DistanceList& distance_list() const;
+        const CustomerList& customer_list() const;
+        const Graph& graph() const
         { return problem_->graph_; }
 
     private:
-        Problem *problem_;
+        Problem*    problem_;
         std::size_t num_vehicles_;
     };
 
