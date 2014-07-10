@@ -10,7 +10,7 @@ namespace VrpSolver {
         return sum_distance;
     }
 
-    int Vehicle::distance(const Customer &c1, const Customer &c2) const {
+    int Vehicle::distance(const customer_type& c1, const customer_type& c2) const {
         const int from = c1.id();
         const int to   = c2.id();
         const int index = (to > from) ? ((to-1)*(to)/2+(from)) :
@@ -24,7 +24,7 @@ namespace VrpSolver {
         return mileage_ + distance(current_, depot);
     }
 
-    void Vehicle::visit(const Customer& c) {
+    void Vehicle::visit(const customer_type& c) {
         if (!can_visit(c))
             throw std::runtime_error("vehicle overloaded");
         capacity_ += c.demand();
@@ -35,7 +35,7 @@ namespace VrpSolver {
             fleet_->is_visit_.set(c.id());
     }
 
-    bool Vehicle::can_visit(const Customer& c) const {
+    bool Vehicle::can_visit(const customer_type& c) const {
         return capacity_ + c.demand() <= max_capacity_;
     }
 
