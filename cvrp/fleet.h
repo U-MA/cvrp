@@ -27,7 +27,7 @@ namespace VrpSolver {
         }
 
         // 走行距離を返す
-        unsigned int mileage() const;
+        std::size_t mileage() const;
 
         // 顧客cを訪問する
         void visit(const customer_type& c);
@@ -40,7 +40,7 @@ namespace VrpSolver {
 
         std::vector<customer_type> route_;
         customer_type              current_;       // 最後に訪問した顧客
-        unsigned int               mileage_;
+        std::size_t                mileage_;
         std::size_t                capacity_;
         std::size_t                max_capacity_;  // 最大容量
         const DistanceList&        distance_;
