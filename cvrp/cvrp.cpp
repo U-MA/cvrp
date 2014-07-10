@@ -36,7 +36,7 @@ namespace VrpSolver {
         return problem_->capacity_;
     }
 
-    unsigned int Cvrp::demand(unsigned int node_id) const {
+    std::size_t Cvrp::demand(unsigned int node_id) const {
         if ((1 > node_id) || (node_id > problem_->dimension_))
             throw std::out_of_range("error: in Cvrp::demand");
         return problem_->graph_.customer_list_[node_id].demand();

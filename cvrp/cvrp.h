@@ -42,7 +42,7 @@ namespace VrpSolver {
         std::string name() const;
         std::size_t dimension() const;
         std::size_t capacity() const;
-        unsigned int demand(unsigned int node_id) const;
+        std::size_t demand(unsigned int node_id) const;
         size_t num_vehicles() const;
         unsigned int distance(unsigned int from, unsigned int to) const;
         const DistanceList &distance_list() const;
