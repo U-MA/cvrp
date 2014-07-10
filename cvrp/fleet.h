@@ -17,7 +17,7 @@ namespace VrpSolver {
 
         typedef Customer customer_type;
 
-        Vehicle(unsigned int max_capacity, const DistanceList &distance,
+        Vehicle(std::size_t max_capacity, const DistanceList &distance,
                 Fleet* fleet = nullptr) :
             route_(), current_(Customer(0,0)), mileage_(0), capacity_(0),
             max_capacity_(max_capacity), distance_(distance), fleet_(fleet) {}
@@ -42,7 +42,7 @@ namespace VrpSolver {
         Customer current_;             // 最後に訪問した顧客
         unsigned int mileage_;
         unsigned int capacity_;
-        unsigned int max_capacity_;    // 最大容量
+        std::size_t max_capacity_;    // 最大容量
         const DistanceList &distance_;
         Fleet* fleet_;                 // 所属している車団
 
