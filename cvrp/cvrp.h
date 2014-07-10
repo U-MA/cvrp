@@ -24,7 +24,7 @@ namespace VrpSolver {
         { }
 
         std::string name_;
-        unsigned int dimension_;
+        std::size_t dimension_;
         unsigned int capacity_;
         unsigned int depot_;
         std::vector<Point> coords_;
@@ -40,7 +40,7 @@ namespace VrpSolver {
         void read_vrp(const std::string &infile);
 
         std::string name() const;
-        unsigned int dimension() const;
+        std::size_t dimension() const;
         unsigned int capacity() const;
         unsigned int demand(unsigned int node_id) const;
         size_t num_vehicles() const;
