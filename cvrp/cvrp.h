@@ -26,7 +26,7 @@ namespace VrpSolver {
         std::string name_;
         std::size_t dimension_;
         std::size_t capacity_;
-        unsigned int depot_;
+        std::size_t depot_;
         std::vector<Point> coords_;
         Graph graph_;
     };
