@@ -36,8 +36,6 @@ namespace VrpSolver {
         Cvrp() { problem_ = new Problem(); }
         ~Cvrp() { delete problem_; }
 
-        // cvrp intialize by infile
-        void read_vrp(const std::string &infile);
 
         std::string name() const {
             return problem_->name_;
@@ -51,13 +49,9 @@ namespace VrpSolver {
             return problem_->capacity_;
         }
 
-        std::size_t demand(unsigned int node_id) const;
-
         std::size_t num_vehicles() const {
             return num_vehicles_;
         }
-
-        std::size_t distance(unsigned int from, unsigned int to) const;
 
         const DistanceList& distance_list() const {
             return problem_->graph_.distance_list_;
@@ -70,6 +64,13 @@ namespace VrpSolver {
         const Graph& graph() const {
             return problem_->graph_;
         }
+
+        std::size_t demand(unsigned int node_id) const;
+
+        // cvrp intialize by infile
+        void read_vrp(const std::string &infile);
+
+        std::size_t distance(unsigned int from, unsigned int to) const;
 
     private:
         Problem*    problem_;
