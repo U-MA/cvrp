@@ -14,6 +14,9 @@ namespace VrpSolver {
 
     class Vehicle {
     public:
+
+        typedef Customer customer_type;
+
         Vehicle(unsigned int max_capacity, const DistanceList &distance,
                 Fleet* fleet = nullptr) :
             route_(), current_(Customer(0,0)), mileage_(0), capacity_(0),
