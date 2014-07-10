@@ -22,7 +22,7 @@ namespace VrpSolver {
             route_(), current_(Customer(0,0)), mileage_(0), capacity_(0),
             max_capacity_(max_capacity), distance_(distance), fleet_(fleet) {}
 
-        unsigned int capacity() const {
+        std::size_t capacity() const {
             return capacity_;
         }
 
@@ -41,7 +41,7 @@ namespace VrpSolver {
         std::vector<customer_type> route_;
         customer_type              current_;       // 最後に訪問した顧客
         unsigned int               mileage_;
-        unsigned int               capacity_;
+        std::size_t                capacity_;
         std::size_t                max_capacity_;  // 最大容量
         const DistanceList&        distance_;
         Fleet*                     fleet_;         // 所属している車団
