@@ -28,7 +28,7 @@ namespace VrpSolver {
         return problem_->name_;
     }
 
-    unsigned int Cvrp::dimension() const {
+    std::size_t Cvrp::dimension() const {
         return problem_->dimension_;
     }
 
