@@ -17,7 +17,6 @@ namespace VrpSolver {
         }
 
     private:
-        Customer();
         std::size_t id_;
         std::size_t demand_;
     };
