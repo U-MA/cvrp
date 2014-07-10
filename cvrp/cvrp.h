@@ -39,16 +39,37 @@ namespace VrpSolver {
         // cvrp intialize by infile
         void read_vrp(const std::string &infile);
 
-        std::string name() const;
-        std::size_t dimension() const;
-        std::size_t capacity() const;
+        std::string name() const {
+            return problem_->name_;
+        }
+
+        std::size_t dimension() const {
+            return problem_->dimension_;
+        }
+
+        std::size_t capacity() const {
+            return problem_->capacity_;
+        }
+
         std::size_t demand(unsigned int node_id) const;
-        std::size_t num_vehicles() const;
+
+        std::size_t num_vehicles() const {
+            return num_vehicles_;
+        }
+
         std::size_t distance(unsigned int from, unsigned int to) const;
-        const DistanceList& distance_list() const;
-        const CustomerList& customer_list() const;
-        const Graph& graph() const
-        { return problem_->graph_; }
+
+        const DistanceList& distance_list() const {
+            return problem_->graph_.distance_list_;
+        }
+
+        const CustomerList& customer_list() const {
+            return problem_->graph_.customer_list_;
+        }
+
+        const Graph& graph() const {
+            return problem_->graph_;
+        }
 
     private:
         Problem*    problem_;

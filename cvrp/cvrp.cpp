@@ -24,26 +24,10 @@ namespace VrpSolver {
             throw std::runtime_error("error: can not read number of vehicles");
     }
 
-    std::string Cvrp::name() const {
-        return problem_->name_;
-    }
-
-    std::size_t Cvrp::dimension() const {
-        return problem_->dimension_;
-    }
-
-    std::size_t Cvrp::capacity() const {
-        return problem_->capacity_;
-    }
-
     std::size_t Cvrp::demand(unsigned int node_id) const {
         if ((1 > node_id) || (node_id > problem_->dimension_))
             throw std::out_of_range("error: in Cvrp::demand");
         return problem_->graph_.customer_list_[node_id].demand();
-    }
-
-    size_t Cvrp::num_vehicles() const {
-        return num_vehicles_;
     }
 
     std::size_t Cvrp::distance(unsigned int from, unsigned int to) const {
@@ -54,14 +38,6 @@ namespace VrpSolver {
         const int index = (to > from) ? ((to-1)*(to)/2+(from)) :
                                         ((from-1)*(from)/2+(to));
         return problem_->graph_.distance_list_[index];
-    }
-
-    const DistanceList &Cvrp::distance_list() const {
-        return problem_->graph_.distance_list_;
-    }
-
-    const CustomerList &Cvrp::customer_list() const {
-        return problem_->graph_.customer_list_;
     }
 
     std::size_t distance(const DistanceList& dlist, 
