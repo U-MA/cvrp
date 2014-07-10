@@ -6,7 +6,8 @@ namespace VrpSolver {
     class Customer {
     public:
         Customer(std::size_t id, std::size_t demand)
-            : id_(id), demand_(demand) {}
+            : id_(id), demand_(demand)
+        { }
 
         std::size_t id() const {
             return id_;
