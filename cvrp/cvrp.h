@@ -9,7 +9,7 @@
 
 namespace VrpSolver {
 
-    typedef std::vector<std::size_t> DistanceList;
+    typedef std::vector<std::size_t>  DistanceList;
     typedef std::vector<Customer>     CustomerList;
     typedef std::pair<int, int>       Point;
 
@@ -80,7 +80,7 @@ namespace VrpSolver {
     };
 
     std::size_t distance(const DistanceList& dlist,
-                          const Customer& from, const Customer& to);
+                         const Customer& from, const Customer& to);
 
 } // namespace VrpSolver
 
