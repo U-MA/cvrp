@@ -43,7 +43,7 @@ namespace VrpSolver {
         std::size_t dimension() const;
         std::size_t capacity() const;
         std::size_t demand(unsigned int node_id) const;
-        size_t num_vehicles() const;
+        std::size_t num_vehicles() const;
         std::size_t distance(unsigned int from, unsigned int to) const;
         const DistanceList &distance_list() const;
         const CustomerList &customer_list() const;
@@ -52,7 +52,7 @@ namespace VrpSolver {
 
     private:
         Problem *problem_;
-        size_t num_vehicles_;
+        std::size_t num_vehicles_;
     };
 
     std::size_t distance(const DistanceList& dlist,
