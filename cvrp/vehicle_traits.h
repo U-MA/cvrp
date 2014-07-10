@@ -13,7 +13,7 @@ namespace VrpSolver {
         { return v.capacity(); }
 
         static std::size_t distance(const vehicle_type& v)
-        { return v.distance(); }
+        { return v.mileage(); }
 
         static bool can_visit(const vehicle_type& v, const customer_type& c)
         { return v.can_visit(c); }
