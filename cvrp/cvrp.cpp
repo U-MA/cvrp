@@ -32,7 +32,7 @@ namespace VrpSolver {
         return problem_->dimension_;
     }
 
-    unsigned int Cvrp::capacity() const {
+    std::size_t Cvrp::capacity() const {
         return problem_->capacity_;
     }
 

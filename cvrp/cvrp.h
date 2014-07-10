@@ -25,7 +25,7 @@ namespace VrpSolver {
 
         std::string name_;
         std::size_t dimension_;
-        unsigned int capacity_;
+        std::size_t capacity_;
         unsigned int depot_;
         std::vector<Point> coords_;
         Graph graph_;
@@ -41,7 +41,7 @@ namespace VrpSolver {
 
         std::string name() const;
         std::size_t dimension() const;
-        unsigned int capacity() const;
+        std::size_t capacity() const;
         unsigned int demand(unsigned int node_id) const;
         size_t num_vehicles() const;
         unsigned int distance(unsigned int from, unsigned int to) const;
