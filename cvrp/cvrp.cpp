@@ -46,7 +46,7 @@ namespace VrpSolver {
         return num_vehicles_;
     }
 
-    unsigned int Cvrp::distance(unsigned int from, unsigned int to) const {
+    std::size_t Cvrp::distance(unsigned int from, unsigned int to) const {
         if ((0 > from) || (from > problem_->dimension_) ||
             (0 > to) || (to > problem_->dimension_))
             throw std::out_of_range("error: in Cvrp::distance");
@@ -64,7 +64,7 @@ namespace VrpSolver {
         return problem_->graph_.customer_list_;
     }
 
-    unsigned int distance(const DistanceList& dlist, 
+    std::size_t distance(const DistanceList& dlist, 
                           const Customer& c1, const Customer& c2) {
         const int from = c1.id();
         const int to   = c2.id();
