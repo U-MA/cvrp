@@ -33,7 +33,9 @@ namespace VrpSolver {
 
     class Cvrp {
     public:
-        Cvrp() { problem_ = new Problem(); }
+        Cvrp() : problem_(new Problem()), num_vehicles_(0)
+        { }
+
         ~Cvrp() { delete problem_; }
 
         std::string name() const {
