@@ -38,7 +38,7 @@ namespace VrpSolver {
     private:
         int distance(const Customer &from, const Customer &to) const;
 
-        std::vector<Customer> route_;
+        std::vector<customer_type> route_;
         Customer current_;             // 最後に訪問した顧客
         unsigned int mileage_;
         unsigned int capacity_;
