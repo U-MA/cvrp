@@ -20,7 +20,8 @@ namespace VrpSolver {
 
     struct Problem {
         Problem() : name_(""), dimension_(0), capacity_(0), depot_(0),
-                    coords_(0) {}
+                    coords_(0)
+        { }
 
         std::string name_;
         unsigned int dimension_;
