@@ -23,12 +23,12 @@ namespace VrpSolver {
                     coords_(0)
         { }
 
-        std::string name_;
-        std::size_t dimension_;
-        std::size_t capacity_;
-        std::size_t depot_;
+        std::string        name_;
+        std::size_t        dimension_;
+        std::size_t        capacity_;
+        std::size_t        depot_;
         std::vector<Point> coords_;
-        Graph graph_;
+        Graph              graph_;
     };
 
     class Cvrp {
