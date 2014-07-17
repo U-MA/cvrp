@@ -21,12 +21,4 @@ namespace VrpSolver {
             fleet_->is_visit_.set(c.id());
     }
 
-    std::ostream& operator<<(std::ostream& ost, const Vehicle& v) {
-        auto route = v.route_;
-        for (int i=0; i < static_cast<int>(route.size()); i++)
-            ost << route[i].id() << " ";
-        return ost;
-    }
-
-
 } // namespace VrpSolver
