@@ -29,7 +29,9 @@ namespace VrpSolver {
         void visit(const customer_type& c);
 
         // 顧客cを訪問可能か
-        bool can_visit(const customer_type& c) const;
+        bool can_visit(const customer_type& c) const {
+            return capacity_ + c.demand() <= max_capacity_;
+        }
 
     private:
         int distance(const customer_type& from, const customer_type& to) const;
