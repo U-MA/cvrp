@@ -23,7 +23,11 @@ namespace VrpSolver {
         }
 
         // 走行距離を返す
-        std::size_t mileage() const;
+        std::size_t mileage() const {
+            if (route_.empty()) return 0;
+            Customer depot(0, 0);
+            return mileage_ + distance(current_, depot);
+        }
 
         // 顧客cを訪問する
         void visit(const customer_type& c);
