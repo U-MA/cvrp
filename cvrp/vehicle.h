@@ -38,7 +38,14 @@ namespace VrpSolver {
         }
 
     private:
-        int distance(const customer_type& from, const customer_type& to) const;
+        int distance(const customer_type& c1, const customer_type& c2) const {
+            const int from = c1.id();
+            const int to   = c2.id();
+            const int index = (to > from) ? ((to-1)*(to)/2+(from)) :
+                ((from-1)*(from)/2+(to));
+            return distance_[index];
+        }
+
 
         std::vector<customer_type> route_;
         customer_type              current_;       // 最後に訪問した顧客
