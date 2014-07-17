@@ -2,14 +2,6 @@
 
 namespace VrpSolver {
 
-    unsigned int Fleet::distance() const
-    {
-        unsigned int sum_distance = 0;
-        for (auto v : fleet_)
-            sum_distance += v.mileage();
-        return sum_distance;
-    }
-
     int Vehicle::distance(const customer_type& c1, const customer_type& c2) const {
         const int from = c1.id();
         const int to   = c2.id();
