@@ -11,15 +11,20 @@
 
 namespace VrpSolver {
 
+    template <class vehicleT>
     class Fleet {
     public:
+
+        typedef vehicleT vehicle_type;
+        typedef typename vehicleT::customer_type customer_type;
+
         Fleet(size_t size, unsigned int max_capacity,
               const Graph& graph)
             : size_(size), max_capacity_(max_capacity),
               fleet_(), graph_(graph)
         {
             for (size_t i=0; i < size; i++)
-                fleet_.push_back(Vehicle(max_capacity, graph.distance_list_));
+                fleet_.push_back(vehicle_type(max_capacity, graph.distance_list_));
             is_visit_.set(0);
         }
 
@@ -31,19 +36,19 @@ namespace VrpSolver {
             return sum_distance;
         }
 
-        Vehicle& get(size_t i)
+        vehicle_type& get(size_t i)
         { return fleet_[i]; }
 
-        std::vector<Vehicle>::iterator begin()
+        typename std::vector<vehicle_type>::iterator begin()
         { return fleet_.begin(); }
 
-        std::vector<Vehicle>::iterator end()
+        typename std::vector<vehicle_type>::iterator end()
         { return fleet_.end(); }
 
         bool is_visit(size_t id) const
         { return is_visit_.test(id); }
 
-        bool is_visit(const Customer& c) const
+        bool is_visit(const customer_type& c) const
         { return is_visit_.test(c.id()); }
 
         bool is_feasible(size_t dimension)
@@ -57,7 +62,7 @@ namespace VrpSolver {
     private:
         size_t               size_;
         unsigned int         max_capacity_;
-        std::vector<Vehicle> fleet_;
+        std::vector<vehicle_type> fleet_;
         const Graph&         graph_;
 
     public:

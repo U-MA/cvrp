@@ -9,7 +9,8 @@
 
 namespace VrpSolver {
 
-    void visit_randomly(const Cvrp& cvrp, Fleet& fleet,
+    template <class vehicleT>
+    void visit_randomly(const Cvrp& cvrp, Fleet<vehicleT>& fleet,
                         unsigned int seed = 2014) {
         srand(seed);
         const CustomerList& customer_list = cvrp.customer_list();
@@ -30,7 +31,8 @@ namespace VrpSolver {
         }
     }
 
-    void visit_randomly(Fleet& fleet,
+    template <class vehicleT>
+    void visit_randomly(Fleet<vehicleT>& fleet,
                         unsigned int seed = 2014) {
         srand(seed);
         const CustomerList& customer_list = fleet.graph().customer_list_;

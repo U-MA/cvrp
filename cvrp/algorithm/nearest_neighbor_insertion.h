@@ -7,7 +7,8 @@
 
 namespace VrpSolver {
 
-    void nearest_neighbor_insertion(const Cvrp& cvrp, Fleet& fleet) {
+    template <class vehicleT>
+    void nearest_neighbor_insertion(const Cvrp& cvrp, Fleet<vehicleT>& fleet) {
         const CustomerList customer_list = cvrp.customer_list();
         for (auto& v : fleet) {
             Customer current(0, 0); // depot
