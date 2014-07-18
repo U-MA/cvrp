@@ -6,10 +6,11 @@
 
 namespace VrpSolver {
 
+    template <class customerT>
     class Vehicle {
     public:
 
-        typedef Customer customer_type;
+        typedef customerT customer_type;
 
         Vehicle(std::size_t max_capacity, const DistanceList& distance) :
             route_(), current_(Customer(0,0)), mileage_(0), capacity_(0),
@@ -60,7 +61,7 @@ namespace VrpSolver {
         const DistanceList&        distance_;
 
         // Vehicleが保持しているroute_を出力する
-        friend std::ostream& operator<<(std::ostream& ost, const Vehicle& v) {
+        friend std::ostream& operator<<(std::ostream& ost, const Vehicle<customer_type>& v) {
             auto route = v.route_;
             for (int i=0; i < static_cast<int>(route.size()); i++)
                 ost << route[i].id() << " ";
