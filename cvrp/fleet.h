@@ -19,7 +19,7 @@ namespace VrpSolver {
               fleet_(), graph_(graph)
         {
             for (size_t i=0; i < size; i++)
-                fleet_.push_back(Vehicle(max_capacity, graph.distance_list_, this));
+                fleet_.push_back(Vehicle(max_capacity, graph.distance_list_));
             is_visit_.set(0);
         }
 

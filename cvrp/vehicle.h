@@ -6,17 +6,14 @@
 
 namespace VrpSolver {
 
-    class Fleet;
-
     class Vehicle {
     public:
 
         typedef Customer customer_type;
 
-        Vehicle(std::size_t max_capacity, const DistanceList& distance,
-                Fleet* fleet = nullptr) :
+        Vehicle(std::size_t max_capacity, const DistanceList& distance) :
             route_(), current_(Customer(0,0)), mileage_(0), capacity_(0),
-            max_capacity_(max_capacity), distance_(distance), fleet_(fleet) {}
+            max_capacity_(max_capacity), distance_(distance) {}
 
         std::size_t capacity() const {
             return capacity_;
@@ -53,7 +50,6 @@ namespace VrpSolver {
         std::size_t                capacity_;
         std::size_t                max_capacity_;  // 最大容量
         const DistanceList&        distance_;
-        Fleet*                     fleet_;         // 所属している車団
 
         // Vehicleが保持しているroute_を出力する
         friend std::ostream& operator<<(std::ostream& ost, const Vehicle& v) {

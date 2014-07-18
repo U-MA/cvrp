@@ -9,8 +9,6 @@ namespace VrpSolver {
         mileage_  += distance(current_, c);
         route_.push_back(c);
         current_ = c;
-        if (fleet_ != nullptr)
-            fleet_->is_visit_.set(c.id());
     }
 
 } // namespace VrpSolver
