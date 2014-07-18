@@ -30,6 +30,7 @@ namespace VrpSolver {
                     }
                 }
                 visit(v, next);
+                fleet.is_visit_[next.id()] = true;
             }
         }
     }
