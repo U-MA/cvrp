@@ -48,7 +48,7 @@ namespace VrpSolver {
             const int from = c1.id();
             const int to   = c2.id();
             const int index = (to > from) ? ((to-1)*(to)/2+(from)) :
-                ((from-1)*(from)/2+(to));
+                                            ((from-1)*(from)/2+(to));
             return distance_[index];
         }
 
