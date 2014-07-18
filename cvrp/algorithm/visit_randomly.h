@@ -23,7 +23,9 @@ namespace VrpSolver {
 
                 if (candidates.empty()) break;
 
-                visit(v, candidates[rand() % candidates.size()]);
+                Customer next = candidates[rand() % candidates.size()];
+                visit(v, next);
+                fleet.is_visit_[next.id()] = true;
             }
         }
     }
@@ -42,7 +44,9 @@ namespace VrpSolver {
 
                 if (candidates.empty()) break;
 
-                visit(v, candidates[rand() % candidates.size()]);
+                Customer next = candidates[rand() % candidates.size()];
+                visit(v, next);
+                fleet.is_visit_[next.id()] = true;
             }
         }
     }
