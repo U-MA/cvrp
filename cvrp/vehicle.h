@@ -27,7 +27,15 @@ namespace VrpSolver {
         }
 
         // 顧客cを訪問する
-        void visit(const customer_type& c);
+        void visit(const customer_type& c) {
+            if (!can_visit(c))
+                throw std::runtime_error("vehicle overloaded");
+            capacity_ += c.demand();
+            mileage_  += distance(current_, c);
+            route_.push_back(c);
+            current_ = c;
+        }
+
 
         // 顧客cを訪問可能か
         bool can_visit(const customer_type& c) const {
