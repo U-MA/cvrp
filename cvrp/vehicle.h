@@ -15,7 +15,7 @@ namespace VrpSolver {
         typedef typename std::vector<customer_type>::const_iterator const_iterator;
 
         Vehicle(std::size_t max_capacity, const DistanceList& distance) :
-            route_(), current_(Customer(0,0)), capacity_(0),
+            route_(), capacity_(0),
             max_capacity_(max_capacity) {}
 
         std::size_t capacity() const {
