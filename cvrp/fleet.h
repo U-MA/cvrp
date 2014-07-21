@@ -7,7 +7,6 @@
 #include <vector>
 
 #include <cvrp/cvrp.h>
-#include <cvrp/vehicle.h>
 #include <cvrp/vehicle_traits.h>
 
 namespace VrpSolver {
