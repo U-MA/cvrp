@@ -12,6 +12,8 @@ namespace VrpSolver {
         static std::size_t capacity(const vehicle_type& v)
         { return v.capacity(); }
 
+        // vehicle_type::customer_typeがid()を持っていることが必要
+        // dlistはindexを計算している順に格納されていないといけない
         static std::size_t distance(const vehicle_type& v, const DistanceList& dlist)
         {
             std::size_t cur = 0;
