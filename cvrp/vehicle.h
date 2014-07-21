@@ -11,6 +11,8 @@ namespace VrpSolver {
     public:
 
         typedef customerT customer_type;
+        typedef typename std::vector<customer_type>::iterator iterator;
+        typedef typename std::vector<customer_type>::const_iterator const_iterator;
 
         Vehicle(std::size_t max_capacity, const DistanceList& distance) :
             route_(), current_(Customer(0,0)), capacity_(0),
@@ -32,6 +34,14 @@ namespace VrpSolver {
         // 顧客cを訪問可能か
         bool can_visit(const customer_type& c) const {
             return capacity_ + c.demand() <= max_capacity_;
+        }
+
+        const_iterator begin() const {
+            return route_.begin();
+        }
+
+        const_iterator end() const {
+            return route_.end();
         }
 
     private:

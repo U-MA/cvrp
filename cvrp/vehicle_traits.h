@@ -13,7 +13,19 @@ namespace VrpSolver {
         { return v.capacity(); }
 
         static std::size_t distance(const vehicle_type& v, const DistanceList& dlist)
-        { return 0; }
+        {
+            std::size_t cur = 0;
+            std::size_t sum = 0;
+            for (auto i = std::begin(v); i != std::end(v); ++i) {
+                std::size_t next = (*i).id();
+                const int index = (next > cur) ? ((next-1)*(next)/2+(cur)) :
+                                                 ((cur-1)*(cur)/2+(next));
+                sum += dlist[index];
+                cur = next;
+            }
+            const int index = (cur-1)*cur/2;
+            return sum + dlist[index];
+        }
 
         static bool can_visit(const vehicle_type& v, const customer_type& c)
         { return v.can_visit(c); }
