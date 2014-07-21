@@ -12,8 +12,8 @@ namespace VrpSolver {
         static std::size_t capacity(const vehicle_type& v)
         { return v.capacity(); }
 
-        static std::size_t distance(const vehicle_type& v)
-        { return v.mileage(); }
+        static std::size_t distance(const vehicle_type& v, const DistanceList& dlist)
+        { return 0; }
 
         static bool can_visit(const vehicle_type& v, const customer_type& c)
         { return v.can_visit(c); }
@@ -30,9 +30,9 @@ namespace VrpSolver {
     }
 
     template <class VehicleT>
-    size_t distance(const VehicleT& v)
+    size_t distance(const VehicleT& v, const DistanceList& dlist)
     {
-        return vehicle_traits<VehicleT>::distance(v);
+        return vehicle_traits<VehicleT>::distance(v, dlist);
     }
 
     template <class VehicleT>

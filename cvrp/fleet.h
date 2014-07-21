@@ -8,6 +8,7 @@
 
 #include <cvrp/cvrp.h>
 #include <cvrp/vehicle.h>
+#include <cvrp/vehicle_traits.h>
 
 namespace VrpSolver {
 
@@ -28,11 +29,11 @@ namespace VrpSolver {
             is_visit_.set(0);
         }
 
-        unsigned int distance() const
+        std::size_t distance(const DistanceList& dlist) const
         {
-            unsigned int sum_distance = 0;
+            std::size_t sum_distance = 0;
             for (auto v : fleet_)
-                sum_distance += v.mileage();
+                sum_distance += VrpSolver::distance(v, dlist);
             return sum_distance;
         }
 
