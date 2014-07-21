@@ -28,7 +28,6 @@ namespace VrpSolver {
                 throw std::runtime_error("vehicle overloaded");
             capacity_ += c.demand();
             route_.push_back(c);
-            current_ = c;
         }
 
         // 顧客cを訪問可能か
@@ -47,7 +46,6 @@ namespace VrpSolver {
     private:
 
         std::vector<customer_type> route_;
-        customer_type              current_;       // 最後に訪問した顧客
         std::size_t                capacity_;
         std::size_t                max_capacity_;  // 最大容量
 
