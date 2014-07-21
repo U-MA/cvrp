@@ -10,8 +10,8 @@ namespace VrpSolver {
     class Vehicle {
     public:
 
-        typedef customerT customer_type;
-        typedef typename std::vector<customer_type>::iterator iterator;
+        typedef customerT                                           customer_type;
+        typedef typename std::vector<customer_type>::iterator       iterator;
         typedef typename std::vector<customer_type>::const_iterator const_iterator;
 
         Vehicle(std::size_t max_capacity, const DistanceList& distance) :
