@@ -31,8 +31,7 @@ namespace VrpSolver {
     }
 
     std::size_t Cvrp::distance(unsigned int from, unsigned int to) const {
-        if ((from > problem_->dimension_) ||
-            (to > problem_->dimension_))
+        if (from > problem_->dimension_ || to > problem_->dimension_)
             throw std::out_of_range("error: in Cvrp::distance");
 
         const int index = (to > from) ? ((to-1)*(to)/2+(from)) :
