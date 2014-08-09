@@ -77,6 +77,10 @@ namespace VrpSolver {
             return std::make_pair(cinfo[cid].x(), cinfo[cid].y());
         }
 
+        const std::vector<Customer>& customer_information() const {
+            return cinfo;
+        }
+
         // cvrp intialize by infile
         void read_vrp(const std::string &infile);
 
