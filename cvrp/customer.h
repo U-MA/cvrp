@@ -26,6 +26,10 @@ namespace VrpSolver {
         std::size_t demand() const {
             return demand_;
         }
+        
+        void demand(std::size_t demand) {
+            demand_ = demand;
+        }
 
         int x() const {
             return vertex_.first;
