@@ -70,6 +70,10 @@ namespace VrpSolver {
 
         std::size_t distance(unsigned int from, unsigned int to) const;
 
+        std::pair<int, int> coordinate(std::size_t cid) const {
+            return std::make_pair(cinfo[cid].x(), cinfo[cid].y());
+        }
+
         // cvrp intialize by infile
         void read_vrp(const std::string &infile);
 
