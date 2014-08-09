@@ -56,11 +56,6 @@ namespace VrpSolver {
         }
 
         // deprecated
-        const CustomerList& customer_list() const {
-            return problem_->graph_.customer_list_;
-        }
-
-        // deprecated
         const Graph& graph() const {
             return problem_->graph_;
         }
