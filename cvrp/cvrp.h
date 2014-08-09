@@ -77,6 +77,7 @@ namespace VrpSolver {
     private:
         Problem*    problem_;
         std::size_t num_vehicles_;
+        std::vector<Customer> cinfo; // customer info
     };
 
     std::size_t distance(const DistanceList& dlist,
