@@ -22,12 +22,22 @@ namespace VrpSolver {
         iss >> num_vehicles_;
         if (!iss)
             throw std::runtime_error("error: can not read number of vehicles");
+
+        // cinfoの設定
+        cinfo.push_back(Customer(0, 0,
+                                 problem_->coords_[0].first,
+                                 problem_->coords_[0].second));
+        for (std::size_t i=1; i < problem_->dimension_; ++i) {
+            cinfo.push_back(Customer(i, problem_->graph_.customer_list_[i-1].demand(),
+                                     problem_->coords_[i].first,
+                                     problem_->coords_[i].second));
+        }
     }
 
     std::size_t Cvrp::demand(unsigned int node_id) const {
-        if ((1 > node_id) || (node_id > problem_->dimension_))
+        if (node_id > problem_->dimension_)
             throw std::out_of_range("error: in Cvrp::demand");
-        return problem_->graph_.customer_list_[node_id].demand();
+        return cinfo[node_id].demand();
     }
 
     std::size_t Cvrp::distance(unsigned int from, unsigned int to) const {
