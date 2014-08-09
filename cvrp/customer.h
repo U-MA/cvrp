@@ -31,8 +31,16 @@ namespace VrpSolver {
             return vertex_.first;
         }
 
+        void x(int x) {
+            vertex_.first = x;
+        }
+
         int y() const {
             return vertex_.second;
+        }
+
+        void y(int y) {
+            vertex_.second = y;
         }
 
     private:
