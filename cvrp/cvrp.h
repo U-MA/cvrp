@@ -18,19 +18,6 @@ namespace VrpSolver {
         CustomerList customer_list_;
     };
 
-    struct Problem {
-        Problem() : name_(""), dimension_(0), capacity_(0), depot_(0),
-                    coords_(0)
-        { }
-
-        std::string        name_;
-        std::size_t        dimension_;
-        std::size_t        capacity_;
-        std::size_t        depot_;
-        std::vector<Point> coords_;
-        Graph              graph_;
-    };
-
     class Cvrp {
     public:
         Cvrp() : name_("UNKNOWN"), num_vehicles_(0)
