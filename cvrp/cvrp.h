@@ -13,11 +13,6 @@ namespace VrpSolver {
     typedef std::vector<Customer>     CustomerList;
     typedef std::pair<int, int>       Point;
 
-    struct Graph {
-        DistanceList distance_list_;
-        CustomerList customer_list_;
-    };
-
     class Cvrp {
     public:
         Cvrp() : name_("UNKNOWN"), num_vehicles_(0)
