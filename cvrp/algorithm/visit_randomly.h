@@ -13,10 +13,10 @@ namespace VrpSolver {
     void visit_randomly(const Cvrp& cvrp, Fleet<vehicleT>& fleet,
                         unsigned int seed = 2014) {
         srand(seed);
-        const CustomerList cinfo = cvrp.customer_information();
+        const auto cinfo = cvrp.customer_information();
         for (auto& v : fleet) {
             while (1) {
-                CustomerList candidates;
+                std::vector<Customer> candidates;
                 for (auto c : cinfo) {
                     if (!fleet.is_visit(c) && can_visit(v, c))
                         candidates.push_back(c);

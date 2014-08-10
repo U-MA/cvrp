@@ -9,11 +9,11 @@ namespace VrpSolver {
 
     template <class vehicleT>
     void nearest_neighbor_insertion(const Cvrp& cvrp, Fleet<vehicleT>& fleet) {
-        const CustomerList cinfo = cvrp.customer_information();
+        const auto cinfo = cvrp.customer_information();
         for (auto& v : fleet) {
             Customer current(0, 0); // depot
             while (1) {
-                CustomerList candidates;
+                std::vector<Customer> candidates;
                 for (auto c : cinfo) {
                     if (!fleet.is_visit(c) && can_visit(v, c))
                         candidates.push_back(c);

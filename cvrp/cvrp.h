@@ -10,7 +10,6 @@
 namespace VrpSolver {
 
     typedef std::vector<std::size_t>  DistanceList;
-    typedef std::vector<Customer>     CustomerList;
     typedef std::pair<int, int>       Point;
 
     class Cvrp {
