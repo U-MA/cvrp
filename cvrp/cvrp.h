@@ -33,31 +33,24 @@ namespace VrpSolver {
 
     class Cvrp {
     public:
-        Cvrp() : problem_(new Problem()), num_vehicles_(0)
+        Cvrp() : name_("UNKNOWN"), num_vehicles_(0)
         { }
 
-        ~Cvrp() { delete problem_; }
-
         std::string name() const {
-            return problem_->name_;
+            return name_;
         }
 
         std::size_t dimension() const {
-            return problem_->dimension_;
+            return dimension_;
         }
 
         std::size_t capacity() const {
-            return problem_->capacity_;
+            return capacity_;
         }
 
         // deprecated
         const DistanceList& distance_list() const {
-            return problem_->graph_.distance_list_;
-        }
-
-        // deprecated
-        const Graph& graph() const {
-            return problem_->graph_;
+            return dlist_;
         }
 
         std::size_t num_vehicles() const {
@@ -69,21 +62,24 @@ namespace VrpSolver {
         std::size_t distance(unsigned int from, unsigned int to) const;
 
         std::pair<int, int> coordinate(std::size_t cid) const {
-            return std::make_pair(cinfo[cid].x(), cinfo[cid].y());
+            return std::make_pair(cinfo_[cid].x(), cinfo_[cid].y());
         }
 
         const std::vector<Customer>& customer_information() const {
-            return cinfo;
+            return cinfo_;
         }
 
         // cvrp intialize by infile
         void read_vrp(const std::string &infile);
 
-
     private:
-        Problem*    problem_;
-        std::size_t num_vehicles_;
-        std::vector<Customer> cinfo; // customer info
+        std::string              name_;
+        std::size_t              dimension_;
+        std::size_t              capacity_;
+        std::size_t              depot_;
+        std::size_t              num_vehicles_;
+        std::vector<Customer>    cinfo_; // customer info
+        std::vector<std::size_t> dlist_;
     };
 
     std::size_t distance(const DistanceList& dlist,

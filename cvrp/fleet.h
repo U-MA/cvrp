@@ -18,10 +18,9 @@ namespace VrpSolver {
         typedef vehicleT vehicle_type;
         typedef typename vehicleT::customer_type customer_type;
 
-        Fleet(size_t size, unsigned int max_capacity,
-              const Graph& graph)
+        Fleet(size_t size, unsigned int max_capacity)
             : size_(size), max_capacity_(max_capacity),
-              fleet_(), graph_(graph)
+              fleet_()
         {
             for (size_t i=0; i < size; i++)
                 fleet_.push_back(vehicle_type(max_capacity));
@@ -54,16 +53,12 @@ namespace VrpSolver {
         bool is_feasible(size_t dimension)
         { return is_visit_.count() == dimension; }
 
-        const Graph& graph() const
-        { return graph_; }
-
         std::bitset<101> is_visit_;
 
     private:
         size_t               size_;
         unsigned int         max_capacity_;
         std::vector<vehicle_type> fleet_;
-        const Graph&         graph_;
 
     public:
         Fleet() = delete;

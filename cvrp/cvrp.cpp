@@ -9,55 +9,6 @@
 
 namespace VrpSolver {
 
-    void read_vrp(Problem *, const std::string &infile);
-
-    void Cvrp::read_vrp(const std::string &infile) {
-        VrpSolver::read_vrp(problem_, infile);
-
-        // 車体数の設定(TSPLIB formatでは明示的に示されていないので
-        // ファイル名から読み取る
-        size_t i = infile.rfind('k');
-        size_t j = infile.rfind('.');
-        std::istringstream iss(infile.substr(i+1, j));
-        iss >> num_vehicles_;
-        if (!iss)
-            throw std::runtime_error("error: can not read number of vehicles");
-
-        // cinfoの設定
-        cinfo.push_back(Customer(0, 0,
-                                 problem_->coords_[0].first,
-                                 problem_->coords_[0].second));
-        for (std::size_t i=1; i < problem_->dimension_; ++i) {
-            cinfo.push_back(Customer(i, problem_->graph_.customer_list_[i-1].demand(),
-                                     problem_->coords_[i].first,
-                                     problem_->coords_[i].second));
-        }
-    }
-
-    std::size_t Cvrp::demand(unsigned int node_id) const {
-        if (node_id > problem_->dimension_)
-            throw std::out_of_range("error: in Cvrp::demand");
-        return cinfo[node_id].demand();
-    }
-
-    std::size_t Cvrp::distance(unsigned int from, unsigned int to) const {
-        if (from > problem_->dimension_ || to > problem_->dimension_)
-            throw std::out_of_range("error: in Cvrp::distance");
-
-        const int index = (to > from) ? ((to-1)*(to)/2+(from)) :
-                                        ((from-1)*(from)/2+(to));
-        return problem_->graph_.distance_list_[index];
-    }
-
-    std::size_t distance(const DistanceList& dlist, 
-                          const Customer& c1, const Customer& c2) {
-        const int from = c1.id();
-        const int to   = c2.id();
-        const int index = (to > from) ? ((to-1)*(to)/2+(from)) :
-                                        ((from-1)*(from)/2+(to));
-        return dlist[index];
-    }
-
     // 文字列strからtrim_char文字列に含まれている文字を削除
     void trim(std::string& str, const std::string& trim_char) {
         size_t pos;
@@ -72,6 +23,7 @@ namespace VrpSolver {
         while (param == ":") ifs >> param; // ":"は読み飛ばす
         return param;
     }
+
 
     typedef std::string keyword;
 
@@ -125,8 +77,8 @@ namespace VrpSolver {
         { "LOWER_ROW", LOWER_ROW }
     };
 
-    // infileから情報を読み取りCvrpクラスをセットアップする
-    void read_vrp(Problem *problem, const std::string &infile) {
+
+    void Cvrp::read_vrp(const std::string &infile) {
         std::ifstream ifs(infile.c_str());
         if (!ifs)
             throw std::runtime_error("error: can't open file " + infile);
@@ -143,7 +95,7 @@ namespace VrpSolver {
 
                 // The specification part
                 case NAME :
-                    problem->name_ = get_parameter(ifs);
+                    name_ = get_parameter(ifs);
                     break;
                 case TYPE :
                     {
@@ -158,10 +110,10 @@ namespace VrpSolver {
                     }
                     break;
                 case DIMENSION :
-                    problem->dimension_ = stoi(get_parameter(ifs));
+                    dimension_ = stoi(get_parameter(ifs));
                     break;
                 case CAPACITY :
-                    problem->capacity_ = stoi(get_parameter(ifs));
+                    capacity_ = stoi(get_parameter(ifs));
                     break;
                 case EDGE_WEIGHT_TYPE :
                     edge_weight_type = ew_type_map[get_parameter(ifs)];
@@ -195,16 +147,15 @@ namespace VrpSolver {
                 case NODE_COORD_SECTION :
                     {
                         int m, x, y; // m do not use
-                        for (int i=0; i != static_cast<int>(problem->dimension_); i++) {
+                        for (std::size_t i=0; i != dimension_; i++) {
                             ifs >> m >> x >> y;
-                            std::pair<int,int> c(x,y);
-                            problem->coords_.push_back(c);
+                            cinfo_.push_back(Customer(i, 0, x, y));
                         }
                     }
                     break;
                 case DEPOT_SECTION :
                     {
-                        problem->depot_ = stoi(get_parameter(ifs));
+                        depot_ = stoi(get_parameter(ifs));
                         if (stoi(get_parameter(ifs)) != -1)
                             throw std::runtime_error("error:"
                                     "can't handle multiple depots");
@@ -212,17 +163,11 @@ namespace VrpSolver {
                     break;
                 case DEMAND_SECTION :
                     {
-                        // depotの番号は1であると仮定
-                        // Customerのidは1から開始するためにnode_idから
-                        // 1を引いている
                         unsigned int node_id, demand;
-                        ifs >> node_id >> demand; // depotの情報は捨てる
-                        for (int i=0; i < static_cast<int>(problem->dimension_-1); i++) {
+                        ifs >> node_id >> demand;
+                        for (std::size_t i=0; i < dimension_; i++) {
                             ifs >> node_id >> demand;
-                            if (static_cast<int>(node_id-2) != i)
-                                throw std::runtime_error("error:"
-                                        "DEMAND_SECTION format may be different");
-                            problem->graph_.customer_list_.push_back(Customer(node_id-1, demand));
+                            cinfo_[i].demand(demand);
                         }
                     }
                     break;
@@ -233,11 +178,11 @@ namespace VrpSolver {
                     {
                         if (edge_weight_format != LOWER_ROW)
                             throw std::runtime_error("Sorry, can not handle except EDGE_WEIGHT_FORMAT == LOWER_ROW");
-                        for (int i=0; i < static_cast<int>(problem->dimension_); i++) {
-                            for (int j=0; j < i; j++) {
+                        for (std::size_t i=0; i < dimension_; i++) {
+                            for (std::size_t j=0; j < i; j++) {
                                 int distance;
                                 ifs >> distance;
-                                problem->graph_.distance_list_.push_back(distance);
+                                dlist_.push_back(distance);
                             }
                         }
                     }
@@ -251,16 +196,47 @@ namespace VrpSolver {
 
         // distancesの設定
         if (edge_weight_type != EXPLICIT) {
-            auto& distances = problem->graph_.distance_list_;
-            auto& coords    = problem->coords_;
-            for (int i=0; i < static_cast<int>(problem->dimension_); i++) {
-                for (int j=0; j < i; j++) {
-                    int dx = coords[j].first  - coords[i].first;
-                    int dy = coords[j].second - coords[i].second;
-                    distances.push_back(floor(sqrt(dx*dx + dy*dy)+0.5));
+            for (std::size_t i=0; i < dimension_; i++) {
+                for (std::size_t j=0; j < i; j++) {
+                    int dx = cinfo_[j].x() - cinfo_[i].x();
+                    int dy = cinfo_[j].y() - cinfo_[i].y();
+                    dlist_.push_back(floor(sqrt(dx*dx + dy*dy)+0.5));
                 }
             }
         }
+
+        // 車体数の設定(TSPLIB formatでは明示的に示されていないので
+        // ファイル名から読み取る
+        size_t i = infile.rfind('k');
+        size_t j = infile.rfind('.');
+        std::istringstream iss(infile.substr(i+1, j));
+        iss >> num_vehicles_;
+        if (!iss)
+            throw std::runtime_error("error: can not read number of vehicles");
+    }
+
+    std::size_t Cvrp::demand(unsigned int node_id) const {
+        if (node_id > dimension_)
+            throw std::out_of_range("error: in Cvrp::demand");
+        return cinfo_[node_id].demand();
+    }
+
+    std::size_t Cvrp::distance(unsigned int from, unsigned int to) const {
+        if (from > dimension_ || to > dimension_)
+            throw std::out_of_range("error: in Cvrp::distance");
+
+        const int index = (to > from) ? ((to-1)*(to)/2+(from)) :
+                                        ((from-1)*(from)/2+(to));
+        return dlist_[index];
+    }
+
+    std::size_t distance(const DistanceList& dlist, 
+                          const Customer& c1, const Customer& c2) {
+        const int from = c1.id();
+        const int to   = c2.id();
+        const int index = (to > from) ? ((to-1)*(to)/2+(from)) :
+                                        ((from-1)*(from)/2+(to));
+        return dlist[index];
     }
 
 } // namespace VrpSolver

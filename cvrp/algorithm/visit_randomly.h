@@ -31,28 +31,6 @@ namespace VrpSolver {
         }
     }
 
-    template <class vehicleT>
-    void visit_randomly(Fleet<vehicleT>& fleet,
-                        unsigned int seed = 2014) {
-        srand(seed);
-        const CustomerList& customer_list = fleet.graph().customer_list_;
-        for (auto& v : fleet) {
-            while (1) {
-                CustomerList candidates;
-                for (auto c : customer_list) {
-                    if (!fleet.is_visit(c) && can_visit(v, c))
-                        candidates.push_back(c);
-                }
-
-                if (candidates.empty()) break;
-
-                Customer next = candidates[rand() % candidates.size()];
-                visit(v, next);
-                fleet.is_visit_[next.id()] = true;
-            }
-        }
-    }
-
 } // namespace VrpSolver
 
 #endif // VRPSOLVER_ALGORITHM_VISIT_RAMDOMLY
