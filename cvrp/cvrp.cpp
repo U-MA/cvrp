@@ -6,6 +6,7 @@
 #include <stdexcept>
 
 #include "cvrp.h"
+#include <cvrp/tsplib_keyword.h>
 
 namespace VrpSolver {
 
@@ -23,8 +24,6 @@ namespace VrpSolver {
         while (param == ":") ifs >> param; // ":"は読み飛ばす
         return param;
     }
-
-    typedef std::string keyword;
 
     void Cvrp::read_vrp(const std::string &infile) {
         std::ifstream ifs(infile.c_str());

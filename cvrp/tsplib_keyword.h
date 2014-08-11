@@ -3,6 +3,8 @@
 
 namespace VrpSolver {
 
+    typedef std::string keyword;
+
     enum TsplibKeyword {
         // The specification part
         NAME, TYPE, COMMENT, DIMENSION, CAPACITY,
