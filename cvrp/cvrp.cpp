@@ -25,6 +25,7 @@ namespace VrpSolver {
         return param;
     }
 
+    // NODE_COORD_SECTIONがDEMAND_SECTIONより先にあることを想定している
     void Cvrp::read_vrp(const std::string &infile) {
         std::ifstream ifs(infile.c_str());
         if (!ifs)
