@@ -24,7 +24,7 @@ namespace VrpSolver {
                 VrpSolver::Customer next(0, 0);
                 unsigned int min = 1000000;
                 for (auto c : candidates) {
-                    unsigned int dist = distance(cvrp.distance_list(), current, c);
+                    unsigned int dist = cvrp.distance(current.id(), c.id());
                     if (dist < min) {
                         min  = dist;
                         next = c;

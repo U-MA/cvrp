@@ -63,9 +63,6 @@ namespace VrpSolver {
         std::vector<std::size_t> dlist_;
     };
 
-    std::size_t distance(const DistanceList& dlist,
-                         const Customer& from, const Customer& to);
-
 } // namespace VrpSolver
 
 #endif // VRPSOLVER_CVRP_H

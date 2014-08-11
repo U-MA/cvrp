@@ -177,13 +177,4 @@ namespace VrpSolver {
         return dlist_[index];
     }
 
-    std::size_t distance(const DistanceList& dlist, 
-                          const Customer& c1, const Customer& c2) {
-        const int from = c1.id();
-        const int to   = c2.id();
-        const int index = (to > from) ? ((to-1)*(to)/2+(from)) :
-                                        ((from-1)*(from)/2+(to));
-        return dlist[index];
-    }
-
 } // namespace VrpSolver
