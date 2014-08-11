@@ -30,7 +30,7 @@ namespace VrpSolver {
         if (!ifs)
             throw std::runtime_error("error: can't open file " + infile);
 
-        EdgeWeightType   edge_weight_type = EXPLICIT;
+        EdgeWeightType   edge_weight_type   = EXPLICIT;
         EdgeWeightFormat edge_weight_format = LOWER_ROW;
 
         while (ifs) {
