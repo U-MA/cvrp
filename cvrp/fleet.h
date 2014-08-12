@@ -53,6 +53,10 @@ namespace VrpSolver {
         bool is_feasible(size_t dimension)
         { return is_visit_.count() == dimension; }
 
+        void add(vehicle_type v) {
+            fleet_.push_back(v);
+        }
+
         std::bitset<101> is_visit_;
 
     private:
