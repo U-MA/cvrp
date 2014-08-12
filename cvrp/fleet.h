@@ -22,8 +22,6 @@ namespace VrpSolver {
             : size_(size), max_capacity_(max_capacity),
               fleet_()
         {
-            for (size_t i=0; i < size; i++)
-                fleet_.push_back(vehicle_type(max_capacity));
             is_visit_.set(0);
         }
 
