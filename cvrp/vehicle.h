@@ -2,6 +2,7 @@
 #define VRPSOLVER_VEHICLE_H
 
 #include <iostream>
+#include <stdexcept>
 #include <vector>
 
 namespace VrpSolver {
