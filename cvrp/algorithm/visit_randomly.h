@@ -9,12 +9,14 @@
 
 namespace VrpSolver {
 
+    // Cvrp::num_vehicles()が設定されていることを想定している
     template <class vehicleT>
     void visit_randomly(const Cvrp& cvrp, Fleet<vehicleT>& fleet,
                         unsigned int seed = 2014) {
         srand(seed);
         const auto cinfo = cvrp.customer_information();
-        for (auto& v : fleet) {
+        for (std::size_t i=0; i < cvrp.num_vehicles(); ++i) {
+            vehicleT v(cvrp.capacity());
             while (1) {
                 std::vector<Customer> candidates;
                 for (auto c : cinfo) {
@@ -28,6 +30,7 @@ namespace VrpSolver {
                 visit(v, next);
                 fleet.is_visit_[next.id()] = true;
             }
+            fleet.add(v);
         }
     }
 
