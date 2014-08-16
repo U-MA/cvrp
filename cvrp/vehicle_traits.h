@@ -77,6 +77,14 @@ namespace VrpSolver {
         return i != std::end(v);
     }
 
+    template <class vehicleT>
+    void merge(vehicleT &v1, const vehicleT &v2) {
+        for (auto i = std::begin(v2); i != std::end(v2); ++i) {
+            typename vehicleT::customer_type c = *i;
+            visit(v1, c);
+        }
+    }
+
 } // namespace VrpSolver
 
 #endif // VRPSOLVER_VEHICLE_TRAITS_H
