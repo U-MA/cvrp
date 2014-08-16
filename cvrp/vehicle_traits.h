@@ -62,6 +62,11 @@ namespace VrpSolver {
         vehicle_traits<VehicleT>::visit(v, c);
     }
 
+    template <class vehicleT>
+    void reverse(vehicleT &v) {
+        std::reverse(std::begin(v), std::end(v));
+    }
+
 } // namespace VrpSolver
 
 #endif // VRPSOLVER_VEHICLE_TRAITS_H
