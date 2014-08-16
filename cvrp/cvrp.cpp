@@ -112,7 +112,6 @@ namespace VrpSolver {
                 case DEMAND_SECTION :
                     {
                         unsigned int node_id, demand;
-                        ifs >> node_id >> demand;
                         for (std::size_t i=0; i < dimension_; i++) {
                             ifs >> node_id >> demand;
                             cinfo_[i].demand(demand);
