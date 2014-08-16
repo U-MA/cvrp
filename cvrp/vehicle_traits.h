@@ -1,6 +1,8 @@
 #ifndef VRPSOLVER_VEHICLE_TRAITS_H
 #define VRPSOLVER_VEHICLE_TRAITS_H
 
+#include <algorithm>
+
 namespace VrpSolver {
 
     template <class VehicleT>
@@ -65,6 +67,14 @@ namespace VrpSolver {
     template <class vehicleT>
     void reverse(vehicleT &v) {
         std::reverse(std::begin(v), std::end(v));
+    }
+
+    template <class vehicleT>
+    bool is_include(const vehicleT &v, std::size_t cid) {
+        auto i = std::find_if(std::begin(v), std::end(v),
+                              [cid](const typename vehicleT::customer_type &c){
+                                   return c.id() == cid; });
+        return i != std::end(v);
     }
 
 } // namespace VrpSolver
