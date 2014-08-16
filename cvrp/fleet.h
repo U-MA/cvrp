@@ -1,8 +1,8 @@
 #ifndef VRPSOLVER_FLEET_H
 #define VRPSOLVER_FLEET_H
 
+#include <algorithm>
 #include <bitset>
-#include <iterator>
 #include <stdexcept>
 #include <vector>
 
@@ -17,6 +17,13 @@ namespace VrpSolver {
 
         typedef vehicleT vehicle_type;
         typedef typename vehicleT::customer_type customer_type;
+        typedef typename std::vector<vehicle_type>::const_iterator const_iterator;
+
+        const_iterator begin() const
+        { return fleet_.begin(); }
+
+        const_iterator end() const
+        { return fleet_.end(); }
 
         Fleet(size_t size, unsigned int max_capacity)
             : size_(size), max_capacity_(max_capacity),
