@@ -64,6 +64,11 @@ namespace VrpSolver {
             fleet_.push_back(v);
         }
 
+        void erase(const vehicle_type& v) {
+            auto i = std::find(std::begin(fleet_), std::end(fleet_), v);
+            fleet_.erase(i);
+        }
+
         std::bitset<101> is_visit_;
 
     private:
