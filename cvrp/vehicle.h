@@ -67,6 +67,14 @@ namespace VrpSolver {
             return route_.size();
         }
 
+        bool operator==(const Vehicle<customer_type> &v) const {
+            return route_ == v.route_;
+        }
+
+        bool operator!=(const Vehicle<customer_type> &v) const {
+            return !(*this == v);
+        }
+
     private:
 
         std::vector<customer_type> route_;
