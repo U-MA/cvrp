@@ -47,6 +47,14 @@ namespace VrpSolver {
             vertex_.second = y;
         }
 
+        bool operator==(const Customer &c) const {
+            return id_ == c.id_;
+        }
+
+        bool operator!=(const Customer &c) const {
+            return !(*this == c);
+        }
+
     private:
         std::size_t id_;
         std::size_t demand_;
