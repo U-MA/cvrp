@@ -63,6 +63,10 @@ namespace VrpSolver {
             return capacity_ + c.demand() <= max_capacity_;
         }
 
+        std::size_t size() const {
+            return route_.size();
+        }
+
     private:
 
         std::vector<customer_type> route_;
