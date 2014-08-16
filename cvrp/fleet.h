@@ -17,6 +17,7 @@ namespace VrpSolver {
 
         typedef vehicleT vehicle_type;
         typedef typename vehicleT::customer_type customer_type;
+        typedef typename std::vector<vehicle_type>::iterator iterator;
         typedef typename std::vector<vehicle_type>::const_iterator const_iterator;
 
         const_iterator begin() const
@@ -43,10 +44,10 @@ namespace VrpSolver {
         vehicle_type& get(size_t i)
         { return fleet_[i]; }
 
-        typename std::vector<vehicle_type>::iterator begin()
+        iterator begin()
         { return fleet_.begin(); }
 
-        typename std::vector<vehicle_type>::iterator end()
+        iterator end()
         { return fleet_.end(); }
 
         bool is_visit(size_t id) const
