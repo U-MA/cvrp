@@ -14,7 +14,8 @@ namespace VrpSolver {
 
         // vehicle_type::customer_typeがid()を持っていることが必要
         // dlistはindexを計算している順に格納されていないといけない
-        static std::size_t distance(const vehicle_type& v, const DistanceList& dlist)
+        template <class distance_list>
+        static std::size_t distance(const vehicle_type& v, const distance_list& dlist)
         {
             std::size_t cur = 0;
             std::size_t sum = 0;
@@ -43,8 +44,8 @@ namespace VrpSolver {
         return vehicle_traits<VehicleT>::capacity(v);
     }
 
-    template <class VehicleT>
-    size_t distance(const VehicleT& v, const DistanceList& dlist)
+    template <class VehicleT, class distance_list>
+    size_t distance(const VehicleT& v, const distance_list& dlist)
     {
         return vehicle_traits<VehicleT>::distance(v, dlist);
     }
